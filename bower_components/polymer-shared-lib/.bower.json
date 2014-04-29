@@ -1,0 +1,18 @@
+{
+  "name": "polymer-shared-lib",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#0.2.0"
+  },
+  "version": "0.2.0",
+  "homepage": "https://github.com/Polymer/polymer-shared-lib",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.0",
+    "commit": "78a34007fad12d7354755ac3a417f672ed1ff29f"
+  },
+  "_source": "git://github.com/Polymer/polymer-shared-lib.git",
+  "_target": "0.2.0",
+  "_originalSource": "Polymer/polymer-shared-lib"
+}

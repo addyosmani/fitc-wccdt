@@ -1,0 +1,13 @@
+<polymer-element name="three-material" attributes="side visible alphaTest overdraw polygonOffsetFactor polygonOffsetUnits depthWrite depthTest blendEquation blendDst blending blendSrc opacity transparent">
+    <script>      
+        Polymer("three-material", {
+            ready: function() {
+                if(!this.three) {
+                    this.three = new THREE.Material();
+                }
+                
+                ["side", "visible", "alphaTest", "overdraw", "polygonOffsetFactor", "polygonOffsetUnits", "depthWrite", "depthTest", "blendEquation", "blendDst", "blending", "blendSrc", "opacity", "transparent"].forEach(POLYTHREE.bindAttrib.bind(this, this, this.three));
+            }
+        });
+    </script>
+</polymer-element>

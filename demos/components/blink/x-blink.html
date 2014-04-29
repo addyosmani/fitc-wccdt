@@ -1,0 +1,19 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="x-blink">
+  <template>
+    <style>
+      :host {
+        -webkit-animation: blink 1s cubic-bezier(1.0,0,0,1.0) infinite 1s;
+      }
+    </style>
+    <content><pre>&lt;x-blink></pre></content>
+  </template>
+  <script>
+  Polymer('x-blink', {
+    ready: function(){
+
+    }
+  });
+  </script>
+</polymer-element>

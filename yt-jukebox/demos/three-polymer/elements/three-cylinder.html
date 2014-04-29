@@ -1,0 +1,30 @@
+<script>
+    (function() {
+        var geoms = {
+            "Cylinder": ["radius", "widthSegments", "heightSegments", "phiStart", "phiLength", "thetaStart", "thetaLength"],
+            "Cube": []
+        };
+        
+        Object.keys(geoms).forEach(function(type) {
+            var defaults = new THREE[type+"Geometry"](),
+                GeomPoly = {
+                    ready: function() {
+                        if(!this.three) {
+                            var args = geoms.map(function(key) { return this[key]; }.bind(this));
+                            this.three = new THREE[type+"Geometry"].apply(undefined, args);
+                        }
+                    }
+                };
+            
+            geoms[type].forEach(function(key) { 
+                GeomPoly[key] = defaults[key];
+            });
+            
+            Polymer("three-"+type.toLowerCase(), GeomPoly);
+            var el = document.createElement("div");
+            el.innerHTML = '\
+                <polymer-element name="three-'+type.toLowerCase()+'" attributes=""></polymer-element>';
+            document.body.appendChild(el);
+        });
+    } ());
+</script>

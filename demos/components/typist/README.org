@@ -1,0 +1,58 @@
+* jQuery "Human Typist" plug-in
+
+  jQuery Plugin homepage:
+  http://plugins.jquery.com/project/humanTypist
+
+** Description
+
+   *A really simple-to-use human-like typing animation*.
+
+   It takes the text inside an HTML tag and types it out
+   /magically/.  Not everyone types at the same speed, and at 0% error
+   rate, and other jQuery typing animations I have looked at didn't
+   handle those scenarios, so I created this little plug-in.
+
+** Basic Usage
+
+This is as simple as it can get:
+
+#+begin_src javascript
+$('#example').humanTypist();
+#+end_src
+
+** Documentation
+
+Please, see the examples/ folder for concrete examples.
+
+*** Sample script
+#+begin_src javascript
+$('#example').humanTypist({
+  'speed': 'grandma'
+}
+#+end_src
+
+Possible options:
+ - 'speed' :: Determine the speed of letters being typed. Here are the
+              possible values ordered from slowest to fastest:
+              + 'grandma'
+              + 'beginner'
+              + 'scriptkiddie'
+              + 'secretary'
+              + 'hacker'
+              + 'elite'
+              + 'computer'
+
+*** Sample HTML
+
+#+begin_src html    
+<p id="example"> 
+  Lorem ipsum dolor sit amet, consectetur adipiscing
+  elit. Phasellus ultricies ante vel nisl varius euismod dapibus neque
+  faucibus. Pellentesque in lectus sapien.
+</p>
+#+end_src
+
+** Author
+
+Kenny Meyer <knny.myer@gmail.com> (@meyerkenny)
+

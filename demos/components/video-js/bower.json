@@ -1,0 +1,8 @@
+{
+  "name": "video-js",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.2.2",
+    "videojs": "~4.5.2"    
+  }
+}

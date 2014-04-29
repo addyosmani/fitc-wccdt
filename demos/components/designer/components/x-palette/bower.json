@@ -1,0 +1,12 @@
+{
+  "name": "x-palette",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "polymer-ui-icon": "Polymer/polymer-ui-icon#master",
+    "polymer-ui-menu": "Polymer/polymer-ui-menu#master",
+    "polymer-ui-menu-item": "Polymer/polymer-ui-menu-item#master",
+    "polymer-ui-submenu-item": "Polymer/polymer-ui-submenu-item#master",
+    "x-meta": "Polymer/x-meta#master"
+  }
+}

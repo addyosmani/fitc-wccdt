@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+
+  <title>video-js Demo</title>
+
+  <script src="../bower_components/platform/platform.js"></script>
+  <link rel="import" href="video-js.html">
+  <style>
+  @font-face {
+    font-family: 'VideoJS';
+    src: url('font/vjs.eot');
+    src: url('font/vjs.eot?#iefix') format('embedded-opentype'), url('font/vjs.woff') format('woff'), url('font/vjs.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  </style>
+
+</head>
+<body>
+
+  <p>A `video-js` looks like this:</p>
+
+
+  <video-js controls preload="auto" width="640" height="264" poster="oceans-clip.png">
+   <source src="oceans-clip.mp4" type='video/mp4' />
+   <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+   <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+  </video-js>
+
+
+  <!--
+    <video-js controls preload="auto" width="640" height="264"
+    poster="oceans-clip.png">
+   <source src="oceans-clip.mp4" type='video/mp4' />
+   <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+   <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+  </video-js>
+  -->
+
+</body>
+</html>

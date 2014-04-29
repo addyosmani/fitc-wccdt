@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <script type="text/javascript" src="../lib/sh_main.min.js"></script>
+    <script type="text/javascript" src="../lib/sh_javascript.min.js"></script>
+    <script type="text/javascript" src="../lib/jquery-1.8.3.min.js"></script> 
+    <script type="text/javascript" src="../src/typist.js"></script>
+    <link rel="stylesheet" href="../lib/sh_darkness.css">
+  </head>
+<style>
+  body{background:black; font-size:20px;}
+  #example { height: auto; }
+</style>
+  <script type="text/javascript">
+     $(function(){
+
+      var codeBlock = $('#example');
+
+      // e.g http://localhost:8000/examples/example.html?file=../src/typist.js
+
+      $.ajax({
+            url: getParam('file') || "sample.js",
+            dataType: "text",
+            async: false,
+            success: function (data){
+                codeBlock.html(data);
+                codeBlock.humanTypist({
+                  'speed' : 'computer'
+                 });
+            }
+        });
+
+      function getParam(name) {
+          return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+      }
+
+    });
+  </script>
+  <body>
+
+    <pre id="final" class="javascript"></pre>
+    <pre id="example">
+    </pre>
+    
+  </body>
+</html>
+

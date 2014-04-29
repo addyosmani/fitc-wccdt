@@ -1,0 +1,15 @@
+{
+  "name": "polymer-doc-viewer",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "polymer-home-page": "Polymer/polymer-home-page#~0.1.4"
+  },
+  "resolutions": {
+    "polymer": "master",
+    "platform": "master"
+  },
+  "devDependencies": {
+    "polymer-ajax": "Polymer/polymer-ajax#~0.1.4"
+  }
+}

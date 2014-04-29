@@ -1,0 +1,26 @@
+{
+  "name": "yt-search-video",
+  "homepage": "https://github.com/Polymer/yt-search-video",
+  "authors": [
+    "The Polymer Authors"
+  ],
+  "description": "A youtube video element with built in search",
+  "main": "yt-search-video.html",
+  "keywords": [
+    "polymer"
+  ],
+  "license": "BSD",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "yt-video": "Polymer/yt-video#master",
+    "yt-search": "Polymer/yt-search#master"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

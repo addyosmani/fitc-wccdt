@@ -1,0 +1,36 @@
+{
+  "name": "yt-search",
+  "homepage": "https://github.com/Polymer/yt-search",
+  "authors": [
+    "The Polymer Authors"
+  ],
+  "description": "A youtube search element",
+  "main": "yt-search.html",
+  "keywords": [
+    "polymer"
+  ],
+  "license": "BSD",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#0.2.3",
+    "polymer-ajax": "Polymer/polymer-ajax#0.2.3"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "0.2.3",
+  "_release": "0.2.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.3",
+    "commit": "1cf059324bbe6063b3646ddb97005b504f69a26c"
+  },
+  "_source": "git://github.com/PolymerLabs/yt-search.git",
+  "_target": "~0.2.3",
+  "_originalSource": "PolymerLabs/yt-search",
+  "_direct": true
+}

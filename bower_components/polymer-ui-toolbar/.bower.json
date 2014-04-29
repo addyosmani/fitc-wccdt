@@ -1,0 +1,22 @@
+{
+  "name": "polymer-ui-toolbar",
+  "private": true,
+  "dependencies": {
+    "polymer-ui-icon-button": "Polymer/polymer-ui-icon-button#0.2.0",
+    "polymer": "Polymer/polymer#0.2.0",
+    "polymer-ui-theme-aware": "Polymer/polymer-ui-theme-aware#0.2.0",
+    "polymer-media-query": "Polymer/polymer-media-query#0.2.0",
+    "polymer-flex-layout": "Polymer/polymer-flex-layout#0.2.0"
+  },
+  "version": "0.2.0",
+  "homepage": "https://github.com/Polymer/polymer-ui-toolbar",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.0",
+    "commit": "ea16d405d9d38e5300b2abc1a424e7e05b440f88"
+  },
+  "_source": "git://github.com/Polymer/polymer-ui-toolbar.git",
+  "_target": "0.2.0",
+  "_originalSource": "Polymer/polymer-ui-toolbar"
+}

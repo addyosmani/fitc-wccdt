@@ -1,0 +1,11 @@
+{
+  "name": "x-tags-elements",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "platform": "Polymer/platform#0.1.4",
+    "x-tag-core": "x-tag/core#0.9.2",
+    "iconbutton": "x-tag/iconbutton#0.1.2",
+    "tabbar": "x-tag/tabbar#0.1.7"
+  }
+}

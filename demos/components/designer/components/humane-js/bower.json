@@ -1,0 +1,7 @@
+{
+  "name": "humane-js",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  }
+}

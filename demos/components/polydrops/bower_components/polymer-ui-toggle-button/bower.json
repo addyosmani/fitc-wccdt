@@ -1,0 +1,8 @@
+{
+  "name": "polymer-ui-toggle-button",
+  "private": true,
+  "dependencies": {
+    "polymer-flex-layout": "Polymer/polymer-flex-layout#0.2.3"
+  },
+  "version": "0.2.3"
+}

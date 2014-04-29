@@ -1,0 +1,17 @@
+{
+  "name": "js-beautify",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  },
+  "homepage": "https://github.com/Polymer/js-beautify",
+  "_release": "a4c267c4ec",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "a4c267c4ec96fe21221511e797828987c06e79f5"
+  },
+  "_source": "git://github.com/Polymer/js-beautify.git",
+  "_target": "master",
+  "_originalSource": "Polymer/js-beautify"
+}

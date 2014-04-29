@@ -1,0 +1,73 @@
+<!-- index.html -->
+<html>
+  <head>
+    <script src="bower_components/platform/platform.js"></script>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        position: relative;
+        height: 100%;
+        font: 16px 'Helvetica Neue', Helvetica, Arial, Roboto;
+        overflow: hidden;
+      }
+      tabbed-content {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body unresolved>
+    
+    <tabbed-content></tabbed-content>
+    
+<!-- s-app.html, which you would normally just import -->
+    <link rel="import" href="bower_components/polymer-ui-tabs/polymer-ui-tabs.html">
+    <link rel="import" href="bower_components/polymer-ui-animated-pages/polymer-ui-animated-pages.html">
+    <link rel="import" href="bower_components/polymer-flex-layout/polymer-flex-layout.html">
+    
+    <polymer-element name="tabbed-content">  
+      <template>
+        <style>
+          :host {
+            display: block;
+          }
+          polymer-ui-tabs {
+            border-top: 1px solid #000;
+          }
+          polymer-ui-tabs > * {
+            border-right: 1px solid #000;
+          }
+          header {
+            padding: 10px;
+            background: black;
+            color: white;
+          }
+          polymer-ui-animated-pages > * {
+            padding: 10px;
+          }
+
+        </style>
+        <polymer-flex-layout vertical></polymer-flex-layout>
+        <header>
+          Header
+        </header>
+        <polymer-ui-animated-pages selected="{{page}}" flex>
+          <div>Page One</div>
+          <div>Page Two</div>
+          <div>Page Three</div>
+        </polymer-ui-animated-pages>
+        <polymer-ui-tabs selected="{{page}}">
+          <span flex>One</span>
+          <span flex>Two</span>
+          <span flex>Three</span>
+        </polymer-ui-tabs>
+      </template>
+
+      <script>
+        // switch page on tab
+        Polymer('tabbed-content', {page:0});
+      </script>
+
+    </polymer-element>
+  </body>
+</html>

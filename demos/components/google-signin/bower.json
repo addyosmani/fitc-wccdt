@@ -1,0 +1,7 @@
+{
+  "name": "google-signin",
+  "version": "0.0.2",
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  }
+}

@@ -1,0 +1,108 @@
+
+We begin with the humble get request. hello.
+
+A server is going to respond with some HTML...
+
+Not a surprise. tag soup.
+
+The browser of course has to do some parsing of this HTML to make sense of it.
+
+Devtools is going to show this as parse HTML whenever that crops up.
+
+When you show something in the DOM as a string. with innerHTML....parse HTML.
+
+We construct ourselves a tree off the back of this. looks like this. lets just call that the DOM. easier than keeping that tree around.
+
+Next step that we actually have in the CSS. its going to come from the user agent stylesheet. inline styles, your stylesheets, any other plugins you put in. 
+
+We're going to combine these two and this shows up in devtools as recalculated styles.
+
+So our render tree looks somewhat similar to our DOM.. except things are now missing. like head is switched off. script is switched off. kinda looks like a dom but its not a dom. its a styled dom.
+
+so if we have some css that says dont display this section paragraph. there we go. that disappears from our render tree. 
+
+if we are including psudo elements. yep. thats going to appear right after in
+the tree. okay.
+
+but of course we have a lot of css. the actual css in places here doesnt matter too much. and. this is the process of reflow. kinda looks like this. 
+
+Geometry for the page - layout. 
+
+Its basically figuring out where all the boxes are on the screen. 
+
+I cant impress upon you the cost of layout enough. The bigger the DOM the more expensive the layout. If you change something, we're probably going to have to recalculate a lot of the document.
+
+Layout is a big deal as we're going to see in a little bit.
+
+We have those boxes. Side-step for a little bit of terminology. Rasterizer. 
+
+So those boxes are effectively vector shapes. They're not actually mapped to pixels yet. 
+
+We know they're X, Y, width, height kinda data. 
+
+But what we want to do is get to the pixels we have on screen. A rasterizer is a piece of software that will help you do that. It will get you from a vector representation like a box through to some pixels on the screen.
+
+Step back in to..actually..that rasterizer thing a little more.
+
+If you and I were to sit down and make a rasterizer this is what we would include. I know this because this is the rasterizer from Chrome. 
+
+Its called SKIA. So you got things like drawing points. drawing paths. drawing text, lines, bit of moving around stuff like the translates and the saving and restoring stuff. 
+
+If you've worked with the canvas you probably recognize this. Its effectively a rasterizer.
+
+So lets step back now with that HTML that I had, those boxes. I said to SKIA what did you do? How did you get those pixels on screen? It went dadaaaa. 
+
+I said thats too quick SKIA. I need an instant replay.
+
+As we step through each of these individual calls you'll see the picture adding up behind me. 
+
+We're adding the text, we go through, we're drawing some paths with the box shadows, clip some stuff. draw a picture. restore, translate, restore and we're done. Now DevTools is going to show you this as paint. Okay.
+
+Now one thing I want to point out is operation number 15. 
+
+Which is drawBitmap. and..I've been a very good person. 
+
+I sent a really small JPEG down the wire. YES. Go me. Good. First part. Thing is its drawBitmap. Its not drawJPEG. or drawPNG. or drawGIF. JIFF. GIF. JIFF. <<hands up for>>?
+
+So we actually have to go through this process of decoding that JPEG out to a Bitmap in memory, which is a slow and cumbersome process often. 
+
+In fact its extremely expensive to get from an encoded form to a bitmap and of course we're probably doing something like responsive so what we're going to do is resize images down.
+
+DevTools again, if you spin those paint records down you'll see image decodes and resizes. We'll look at this more in a bit. 
+
+Now, when we were doing that rasterization, that painting. You may have realized that we were effectively overdrawing the pixels over and over. Sort of filling it in as we go from back to front. What if we say need to move this picture up here? 
+
+Well what happens is that the browser chucks an area of it and says..well this area is damaged. and so we need to step through and re-rasterize step by step by step. 
+
+And of course it doesnt take much imagination to say..huh..what if theres a lot of element that need to be repainted as a consequence of what I did. What I moved.
+
+Thankfully there is a fix for this as if it were. It is the layer. The humble layer. The idea is you can rasterize, you can paint into different surfaces. 
+
+So this is google plus with different layers. Masthead is its own layer. These cards. They get rasterized independently. Painted independently. 
+
+If you look behind it you can see the background is there and so on. Chrome will show you this in DevTools as composited layers. This is the idea of it saying..how many layers do i need. um. 
+
+making sure theyre all in the right place and putting them all together. thats composite layer.
+
+so the layers thing is how we get around this problem. 
+
+So you might be asking yourself, how do i create a layer. So the most common one listed at the top is the 3d transform. translateZ(0) or translate3d(0,0,0) is the one that people often use to force layer creation. 
+
+Videos, canvases, plugins like Flash or Silverlight. Animations on opacity. Transforms. Filters and the last one is something that occurred on top of something that was already promoted to a layer.
+
+Because its an implementation detail, you arent necessarily going to find these in the spec.
+
+So painting, great for us. We've done all our painting. 
+
+Just for completeness sake. Im going to tell you we paint into tiles. Doesnt change anything we do. I just like to include it because im a sucker for the details. All of this happened on the CPU side. 
+
+Up to this point we havent hardware accelerated anything..probably. most likely not. Unless its a video or a canvas. Those most likely exceptions. But everything on the CPU now. 
+
+Now all we have to do and this is composite layers again. upload all those tiles across the GPU and dont be fooled by the animation. If the link between the CPU and the GPU is not good, like on a mobile device, you're going to pay a tax for uploading that texture. 
+
+So if you constantly repaint and you upload those textures over and over again its going to be quite bad. Its bad to paint in the first place often because its expensive. 
+
+Bad to transfer because thats often expensive. So you want to avoid it really. Boop. There we go.
+
+Thats how we got pixels from the get request to pixels on the screen. Cool. 
+

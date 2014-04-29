@@ -1,0 +1,152 @@
+Hey, my name is Addy Osmani, I’m on the Chrome team at Google and today I’m going to talk about how to improve the paint performance of your sites and web apps. 
+
+This is an area that we web developers have only recently started looking at more closely and its important because it can have an impact on your user engagement and user experience.
+
+This talk IS going to bring the dirty sexy money, so i hope you learn something new that can benefit your workflow.
+
+Before I begin, I need to say whenever you’re looking at performance, dont guess it, test it.  Your best option is to learn how to measure your application and understand what your code is doing. 
+
+That way when browsers change you’ll still be clear about what matters for you and will be able to make informed decisions. So..with that..
+
+The other day I was on Pinterest trying to find some ponies to add to my pony homies board (I love ponies!) so I went over to the Pinterest feed and started scrolling through looking for some ponies to add. 
+
+The first thing I noticed as I scrolled through was that scroll on this page is just really slow - it’s taking effort to scroll up and down and the experience just feels really sluggish. 
+
+When users see this they get frustrated, and that means they’re more likely to leave. Of course this is the last thing we want them to do! 
+
+This break in consistent frame rate is something the Chrome team call jank - I’m not sure what’s causing this here. You can actually notice some of the frames being drawn as we scroll - but let’s visualize it!.
+
+Now, as a JavaScript developer my first instinct is to think that maybe this is due to a memory leak. 
+
+Maybe there are some objects being held around after a round of GC. The reality however is that a lot of the time these days our major performance problems are down to slow paint and rendering times. 
+
+The DOM needs to be turned into pixels on the screen, and if there’s a lot of paint work when you scroll it can result in a lot of slowdown.
+
+So, I suspect there’s something in this page affecting the frame rate and so I go open up the DevTools and head to the Timeline and Frames mode to record a new session.
+
+I click the record button and start scrolling through the page the way a normal user would. Now, I want to simulate a few minutes of usage so I’m just going to scroll a little fast. 
+
+Up, down, up, down.. now what you’ll notice in the Summary view up here at the top is that we’re seeing a lot of purple and green, corresponding to paint and rendering times. 
+
+I’m going to stop recording here and as I flip through these various frames I’m seeing some pretty hefty recalc styles and lots of layout. 
+
+If you look at the legend to the very right, you’ll see that we’ve actually blown our budget for 60fps and there are many cases where we’re not even hitting 30fps either.
+
+It’s just performing quite poorly. Now each of these bars in the Summary view correspond to one frame, i.e. all the work that Chrome has to do in order to be able to draw your app to the screen.
+
+Note: Frame rate is the rate at which a device produces consecutive images to the screen. A low frame rate means individual frames can be made out by the eye. A high frate rate gives your users a more responsive feel. 
+
+Long image-decodes, unnecessary image resizes, heavy animation or data processing can all lead to dropped frames, which is a reduction to our frame rate, resulting in janky pages. 
+
+If you’re targeting 60fps (which we say is the optimal number of frames you should be targeting these days, to match the refresh rate of the devices we commonly use) that means you have 16.7ms to complete everything in. 
+
+That’s JavaScript, layout, image decoding & resizing, painting, compositing - everything.
+
+Note: A constant frame rate is our ideal here. If you can’t hit 60fps for whatever reason, you’re likely better off targeting 30fps rather than allowing a variable frame rate between 30 and 60 frames per second.
+
+If you’re aiming for lower-end devices like Mobile this number is more like 8-10ms and even on desktop, you should be aiming for this due to miscellaneous browser processes. 
+
+If you blow this budget, you will miss frames and see jank in your page. So you likely have somewhere nearer 8-10ms, but be sure to test the devices you’re supporting to get a realistic idea of your budgets.
+
+Now, going back to scrolling I have a sneaky suspicion that there are a number of unnecessary repaints occurring in this page onscroll. 
+
+One common mistake is to stuff just way too much JavaScript into the onscroll handlers for a page - this makes it difficult to make frame budget period.The heavier your onscroll handlers are, the higher the chance you’re going to experience slow scrolling. 
+
+The best thing you can do is JUST capture scrollTop in your scroll handlers and use the most recent value inside a rAF loop.
+
+So, I go back into DevTools > Settings and enable “Show paint rectangles”. This allows me to visualize what areas of the screen are being painted with a nice red highlight. Now take a look at what happens as I scroll through Pinterest - do you see that? 
+
+Every few ms we’re experiencing a big bright flash of red across the entire screen. They’re forcing a paint of the whole screen each time we scroll. 
+
+What you want to see is the browser just painting what is brand new to the page, so typically just the bottom of the page as it gets scrolled into view and is painted.
+
+The reason this seems to be happening is down to the little “scroll to top” button in the lower right corner. 
+
+As you scroll the fixed header at the top needs to be repainted, but so does the button. The way that Chrome deals with this is to do a union of the two areas that need to be repainted. 
+
+So in this case there is a rectangle from top left to top right, but not very tall plus a rectangle in the lower right corner. What this gives us is a rectangle from top left to bottom right, which is essentially the whole screen! 
+
+If you inspect the button element in DevTools and either hide it (you can use the ‘h’ key) or delete it and then scroll again you will see only the header area is repainted.
+
+ The way to solve this particular problem would be to move the scroll button out to its own layer so it doesn’t get unioned with the header. It essentially isolates the button so it can be composited on top of the rest of the page. But we’ll talk about layers and compositing in more detail in a little bit...
+
+The next thing I noticed is to do with hover - when I hover over a pin on pinterest, it paints an action bar containing “Repin, comment and like” buttons - lets call that an action bar. 
+
+When I hover over a single pin, it paints not just the bar but also seems to repaint the underlying elements underneath it. Painting should only happen on elements you expect to visually change.
+
+There’s another interesting thing to do with scroll here. I’m going to keep my cursor hovered over this pin and just start to scroll through the page again. 
+
+Does anyone notice what’s happening? Everytime I scroll through a new row of images this action bar is being painted on yet another pin even though my intention as a user isn’t to hover over it. 
+
+I don’t need that bar. Hover amplifies jank on scroll so one thing Pinterest could do here is maybe use a setTimeout with a delay to ensure they only display the bar when a user needs it. 
+
+They could probably do tighter checks on mouseenter to avoid those extra paints.
+
+Now there’s a really great workflow for looking at the overall cost of paint in your page. If you go back into the DevTools and “Enable continuous page repainting”, this feature will constantly paint to your screen so you can find out what elements have costly paint times. 
+
+You get this really nice black box in the top corner that summarizes paint times with the min and max also displayed.
+
+So, we’re going to go back into the Elements panel. Here, I can select a node and just use my keyboard to walk the DOM tree. 
+
+If I suspect that there’s an element with an expensive paint I can just use the H shortcut key (something we recently added) to toggle visibility hidden on that element. Using the continuous paint box I can instantly see if this has a positive impact on my pages paint times. 
+
+We should expect it to in many cases, since if we hide an element we should expect a corresponding reduction in our paint times. But by doing this you might see one element that is especially expensive, and that might bear some further scrutiny!
+
+I can do it to the categories bar or the header and there it goes - and as you expect, because we don’t have to paint these elements at all, we see a drop in the time it takes to paint to the screen. 
+
+If i want even more detailed insights, I can go right back to the Timeline and record a new session to measure impact. Isn’t that great? 
+
+Now whilst this workflow should work great for most pages, there might be cases where it isn’t as useful. In Pinterests case their pins are actually quite deeply nested in the page, making it hard for me to measure paint times in this workflow.
+
+Luckily, we can still get some good mileage by selecting an element (like a pin here), going to the Styles panel and looking at what CSS styles are being used. 
+
+We can toggle properties on and off to see how they impact the paint times. This gives us a much finer grain insight into the paint profile of the page.
+
+In this case, we see that Pinterest are using box-shadow on these pins. We’ve optimized the performance of box-shadow in Chrome over the past 2 years, but in combination with other styles and when heavily used it may cause a bottleneck, so it’s worth looking at. 
+
+So, I’m going to disable box-shadow and see if this makes a difference. As you can see it’s no longer visible on any of my pins. 
+
+So I’m going to go back to my Timeline and record a new session where I scroll the same way I did before (up and down, up and down, up and down) - do you see that? We’re getting closer to 60fps now and that’s just using one change. Imagine if they optimized the other areas of this page?.
+
+Public Service Announcement: we're absolutely not saying don’t use box-shadow - by all means do! Just make sure that if you have a performance problem you’re measuring correctly to find out what your own bottlenecks are. Always measure! 
+
+Your site or application is unique, as will any performance bottlenecks be. Browser internals change almost daily, so measuring is the smartest way to stay up-to-date on the changes, and Chrome’s DevTools makes this really easy to do.
+
+Another thing we noticed is if you click on the “Repin” button, do you see the animated effect and the lightbox that’s being painted? There’s a big red flash of repaint in the background. It's not clear from the tooling if the paint is the white cover or some other affected area. 
+
+Be sure to double check the paint rectangles correspond to the element or elements you think are being repainted and not just what it looks like. In this case it looks like the whole screen is being repainted, but it could just well be the white cover and that may not be all that expensive. 
+
+It’s nuanced, the important thing is to understand what you’re seeing and why.
+
+The last thing we’re going to look at on Pinterest is GPU acceleration. In the past, web browsers have relied pretty heavily on the CPU to render pages. 
+
+This involves two things: firstly we need to paint our elements into a bunch of textures, which are called layers. Secondly we composite all those layers together to the final picture seen on screen.
+
+Over the past few years, however, we found that by getting the GPU involved with the compositing process can result in some significant speedups. The premise is that, while the textures are still painted on the CPU, they can be uploaded to the GPU for compositing. 
+
+We essentially avoid having to give the GPU any new graphics, rather we just ask it to move existing ones around. This is something that the GPU is exceptionally quick at doing, and so overall we see performance improvements.
+
+It’s not a guarantee that this hardware compositing will be available and enabled on a given platform, but if it’s available the first time you use - say - translate3d on an element it will be enabled in Chrome. 
+
+Many developers use the translateZ hack to do just that. The other side-effect of using the hack is that the element in question gets its own layer, which may or not be what you want. 
+
+It can be very useful to effectively isolate an element so that it doesn’t affect others as and when it gets repainted. 
+
+There’s another great feature in DevTools that can help here called “Show composited layer borders”. This gives you insights into those DOM elements that are being manipulated at a GPU level.
+
+ If an element is taking advance of this acceleration you’ll see a orange border around it with this on. Now as we scroll through, I don’t really see any use of composite layers in this page. Not when I click “Scroll to top” or otherwise. 
+
+Chrome is getting better at automatically handling layer promotion in the background, but as mentioned sometimes developers use the translateZ hack to create a composited layer. Here is what the Pinterest feed with translateZ(0) applied to all pins. 
+
+It's not hitting 60fps, but it is getting closer to a consistent 30fps on desktop, which is actually not bad.
+
+Whilst well-known hacks like translateZ(0) can be used for forcing GPU acceleration on any element, it's important not to apply it to everything as this will consume all your GPU memory, increase the layer management costs and cause larger performance problems. Remember to test on both desktop AND mobile. 
+
+Use your timeline in both cases and watch your paint time chart in continuous paint mode to evaluate how fast you’re busting your budget.
+
+Again, don’t use this hack on every element on your page - it might pass for okay on desktop but it won’t on lower-end devices like mobile. 
+
+This is because the GPU has limited VRAM and exhausting it can have a negative impact on performance. Instead, only use hardware compositing to isolate elements where you have a measurably high paint cost. 
+
+And with that, we’re going to stop poking Pinterest with a stick, slow down and talk about some of the techniques we’ve been discussing in more detail. 
+

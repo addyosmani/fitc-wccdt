@@ -1,0 +1,17 @@
+{
+  "name": "pixi-js",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  },
+  "homepage": "https://github.com/Polymer/pixi-js",
+  "_release": "cbf052e8b9",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "cbf052e8b9e070fb03180c3ded913cafc64b4cc6"
+  },
+  "_source": "git://github.com/Polymer/pixi-js.git",
+  "_target": "master",
+  "_originalSource": "Polymer/pixi-js"
+}

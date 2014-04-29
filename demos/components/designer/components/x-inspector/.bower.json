@@ -1,0 +1,20 @@
+{
+  "name": "x-inspector",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "x-property-inspector": "Polymer/x-property-inspector#master",
+    "polymer-ui-icon-button": "Polymer/polymer-ui-icon-button#master",
+    "x-meta": "Polymer/x-meta#master"
+  },
+  "homepage": "https://github.com/Polymer/x-inspector",
+  "_release": "f568c80d85",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "f568c80d85de00d6bb15b8ee14058840dee5b035"
+  },
+  "_source": "git://github.com/Polymer/x-inspector.git",
+  "_target": "master",
+  "_originalSource": "Polymer/x-inspector"
+}

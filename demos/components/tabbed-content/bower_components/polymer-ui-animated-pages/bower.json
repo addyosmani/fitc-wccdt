@@ -1,0 +1,10 @@
+{
+  "name": "polymer-ui-animated-pages",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#0.2.1",
+    "polymer-animation": "Polymer/polymer-animation#0.2.1",
+    "polymer-ui-pages": "Polymer/polymer-ui-pages#0.2.1"
+  },
+  "version": "0.2.1"
+}

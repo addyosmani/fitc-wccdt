@@ -1,0 +1,25 @@
+{
+  "name": "bower-app",
+  "version": "0.0.0",
+  "homepage": "https://github.com/addyosmani/yt-jukebox",
+  "authors": [
+    "Addy Osmani <addyosmani@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "platform": "Polymer/platform#~0.1.0",
+    "polymer-ajax": "Polymer/polymer-ajax",
+    "yt-search": "Polymer/yt-search"
+  },
+  "resolutions": {
+    "platform": "master",
+    "polymer-ajax": "ecf0e055b9"
+  }
+}

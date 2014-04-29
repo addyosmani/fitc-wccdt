@@ -1,0 +1,17 @@
+{
+  "name": "g-kratu",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  },
+  "homepage": "https://github.com/Polymer/g-kratu",
+  "_release": "5211d6c57e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "5211d6c57e1c1ba537a97dfd22ca42d81762fd80"
+  },
+  "_source": "git://github.com/Polymer/g-kratu.git",
+  "_target": "master",
+  "_originalSource": "Polymer/g-kratu"
+}

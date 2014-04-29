@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>&lt;faster-video&gt;</title>
+
+    <!-- Importing Web Component's Polyfill -->
+    <script src="app/bower_components/platform/platform.js"></script>
+
+    <!-- Importing Custom Elements -->
+    <link rel="import" href="src/faster-video.html">
+</head>
+<body>
+
+<!-- Using Custom Elements -->
+<faster-video width="640" height="360">
+  <source src="devstories.webm" 
+          type='video/webm;codecs="vp8, vorbis"' />
+  <source src="devstories.mp4" 
+          type='video/mp4;codecs="avc1.42E01E, mp4a.40.2"' />
+</faster-video>
+
+</body>
+</html>

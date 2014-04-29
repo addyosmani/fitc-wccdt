@@ -1,0 +1,83 @@
+/* Demo specific styling for our element */
+
+polymer-ui-carousel {
+  display: inline-block;
+  height: 450px;
+  width: 800px;
+  background: #4285f4;
+  margin: 5px;
+  clear:both;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+polymer-ui-carousel > div:nth-child(1) {
+  background: red url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHklEQVQIW2NkQAX/GZH4/4FsRpgAmAOSBBFwDkgAAIKuBATRTAAZAAAAAElFTkSuQmCC) repeat;
+}
+polymer-ui-carousel > div:nth-child(2) {
+  background: green url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAJElEQVQIW2NkwAT/GdHE/gP5jMiCYAGQIpggTACuEq4CatR/ABtJBwTL3L3TAAAAAElFTkSuQmCC) repeat;
+}
+polymer-ui-carousel > div:nth-child(3) {
+  background: orange url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAICAYAAADA+m62AAAAPklEQVQYV2NkwAT/gUKM6MLoAjBFGIqRFaJLovBhCrFaB7QeLg5SiEsRzJlgeQxHY/EcSOg/sQoxgwGHiQwA+f4KCL3Y/AQAAAAASUVORK5CYII=) repeat;
+}
+polymer-ui-carousel > div:nth-child(4) {
+  background: purple url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAGklEQVQIW2NkYGD4D8SMQAwGcAY2AbBKDBUAVuYCBQPd34sAAAAASUVORK5CYII=) repeat;
+}
+polymer-ui-carousel > div:nth-child(5) {
+  background: blue url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAUElEQVQYV2NkYGAwBuKzQAwDID4IoIgxIikAMZE1oRiArBDdZBSNMIXoJiFbDZYDKcSmCOYimDuNSVKIzRNYrUYOFuQgweoZbIoxgoeoAAcAEckW11HVTfcAAAAASUVORK5CYII=) repeat;
+}
+
+polymer-ui-carousel div {
+  font-size: 250px;
+  color: white;
+  margin: 0 auto;
+}
+
+
+/* Disable focus */
+
+polymer-ui-carousel .btn-prev, polymer-ui-carousel .btn-next {
+  background-color: transparent;
+}
+
+polymer-ui-carousel button:focus {
+  /*outline: 0;*/
+}
+
+p {
+  margin: 10px;
+  display: block;
+}
+
+/* Responsive styling */
+
+@media only screen and (min-width: 900px) {
+    /* tablets and desktop */
+    polymer-ui-carousel {
+      width: 800px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 899px) {
+    /* tablets and desktop */
+    polymer-ui-carousel {
+      width: 700px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    /* phones */
+    polymer-ui-carousel {
+      width: 400px;
+    }          
+}
+
+@media only screen and (max-width: 350px) {
+    /* phones */
+    polymer-ui-carousel {
+      width: 300px;
+    }   
+
+    polymer-ui-carousel /shadow-root/ #controls {
+      display: none;
+    }         
+}

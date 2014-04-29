@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>PlayBack.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="css/flat-ui.css" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    
+    <style type="text/css">
+    body{ background: #34495E;}
+    .row{ margin-right:20px; word-wrap:break-word;}
+    .span12{ width:100%; word-wrap:break-word;}
+    #final { display:none;}
+    .codeblock{ min-height:300px; background:#2C3E50; border-radius:0px 0px 4px 4px; font-size:60px; word-wrap:break-word;}
+    .codeheader{ 
+      background: #1abc9c url("../images/todo/search.png") 92% center no-repeat;
+      background-size: 16px 16px;
+      border-radius: 6px 6px 0 0;
+      color: #34495e;
+      padding: 19px 25px 20px; display:none;}
+    .container{ width:96% ;}
+    .progress .bar {background:#16A085;}
+    .demo-panel-title{ padding-top:0px;}
+    #example { background:black; color:white; font-size:25px; line-height:30px; word-wrap:break-word;}
+
+    </style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+    
+    <!--
+    http://localhost:8000/examples/index.html?file=../src/typist.js
+    -->
+  </head>
+  <body>
+    <div class="container">
+
+      <h3 class="demo-panel-title"></h3>
+       <pre id="final" class="javascript"></pre>
+
+
+      <div class="row">
+        <div class="span12">
+          <div class="codeheader">
+             <span class="fui-video-24"></span> PlayBack.js
+          </div>
+
+          <pre id="example" class="codeblock">
+          </pre>
+
+          <div class="progress">
+            <div id="bar" class="bar" style="width: 0%;"></div>
+          </div>
+
+        </div>
+      </div>
+
+
+        <div class="row demo-row">
+        <div class="span3">
+
+          <a id="btnPlay" href="#" class="btn btn-large btn-block btn-warning">Play</a>
+        </div>
+
+        <div class="span3">
+          <a href="#" class="btn btn-large btn-block btn-success">Pause</a>
+        </div>
+
+        <div class="span3">
+          <a href="#" class="btn btn-large btn-block btn-info">Replay</a>
+        </div>
+
+
+
+      </div> <!-- /row -->
+       
+      </div> <!-- /download area -->
+
+    </div> <!-- /container -->
+
+
+    <!-- Load JS here for greater good =============================-->
+    
+    <script type="text/javascript" src="../lib/sh_main.min.js"></script>
+    <script type="text/javascript" src="../lib/sh_javascript.min.js"></script>
+    <script type="text/javascript" src="../lib/jquery-1.8.3.min.js"></script> 
+    <script type="text/javascript" src="../src/typist.js"></script>
+    <link rel="stylesheet" href="../lib/sh_darkness.css">
+    
+    <script src="js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src="js/jquery.dropkick-1.0.0.js"></script>
+    <script src="js/custom_checkbox_and_radio.js"></script>
+    <script src="js/custom_radio.js"></script>
+    <script src="js/jquery.tagsinput.js"></script>
+    <script src="js/bootstrap-tooltip.js"></script>
+    <script src="js/jquery.placeholder.js"></script>
+    <script src="http://vjs.zencdn.net/c/video.js"></script>
+    <script src="js/application.js"></script>
+
+
+<script type="text/javascript">
+     $(function(){
+
+      window.blockLength = 0;
+      window.progressBar = $('#bar');
+      var codeBlock = $('#example');
+
+      // e.g http://localhost:8000/examples/example.html?file=../src/typist.js
+
+      function loadFile(){
+        $.ajax({
+              url: getParam('file') || "sample.js",
+              dataType: "text",
+              async: false,
+              success: function (data){
+                  codeBlock.html(data);
+                  animate();
+                  window.blockLength = data.length;
+              }
+          });        
+      }
+
+      $('#btnPlay').on('click', function(){
+        animate();
+      });
+
+      $('#btnStop').on('click', function(){
+        codeBlock.html('');
+        loadFile();
+      });
+
+      window.getProgress = function(){
+        return codeBlock.text().length;
+      }
+
+      window.getProgressPercentage = function(){
+        var num =  window.getProgress() / window.blockLength;
+        //return Math.round( num * 10 ) / 10;
+        return num.toFixed(2) * 100;
+      }
+
+      window.setProgressPercentage = function(){
+        var pc = window.getProgressPercentage();
+        window.progressBar.width(pc + '%');
+      }
+
+      function animate(){
+        codeBlock.humanTypist({'speed' : 'elite', 'language': 'text'});
+      }
+
+      function getParam(name) {
+          return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+      }
+
+      loadFile();
+
+    });
+  </script>
+
+    <!--[if lt IE 8]>
+      <script src="js/icon-font-ie7.js"></script>
+      <script src="js/icon-font-ie7-24.js"></script>
+    <![endif]-->
+  </body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name": "pdf-js",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  }
+}

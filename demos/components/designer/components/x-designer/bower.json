@@ -1,0 +1,12 @@
+{
+  "name": "x-designer",
+  "private": true,
+  "dependencies": {
+    "polymer-layout": "Polymer/polymer-layout#master",
+    "polymer-flex-layout": "Polymer/polymer-flex-layout#master",
+    "polymer-ui-splitter": "Polymer/polymer-ui-splitter#master",
+    "x-designable": "Polymer/x-designable#master",
+    "x-palette": "Polymer/x-palette#master",
+    "x-tree": "Polymer/x-tree#master"
+  }
+}

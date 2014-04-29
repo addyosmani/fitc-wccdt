@@ -1,0 +1,186 @@
+<!doctype html>
+<html class="polymer-ui-full-bleed">
+  <head>
+    <title>polymer-ui-carousel</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- load toolkit -->
+    <script src="bower_components/platform/platform.js"></script>
+    <link rel="stylesheet" href="bower_components/polymer-ui-base-css/base.css">
+
+    <link rel="import" href="polymer-ui-carousel.html">
+    <script src="bower_components/prismjs/prism.js"></script>
+    <link rel="stylesheet" type="text/css" href="bower_components/prismjs/prism.css">
+     <link rel="stylesheet" type="text/css" href="bower_components/prismjs/prism-okadia.css">
+
+
+    <style>
+      polymer-ui-carousel {
+        display: block;
+        height: 420px;
+        width: 800px;
+        background: #2d2d2d;
+        margin: 30px;
+        clear:both;
+      }
+
+      polymer-ui-carousel ^^ polymer-ui-animated-pages {
+        overflow: hidden;
+      }
+
+
+      polymer-ui-carousel ^^ polymer-ui-animated-pages ::content > div {
+        background: #f5f2f0;
+      }
+
+      .description {
+        height: 70px;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        z-index: 15;
+        margin-left: -50%;
+        padding: 15px;
+        list-style: none;
+        text-align: center;
+        background: #1f2036;
+        color: white;
+        font-family: "Open Sans", Helvetica, Arial, sans-serif;
+      }
+
+      .language-mark {
+        width:100%;
+        background: #f5f2f0;
+      }
+
+
+      :not(pre) > code[class*="language-"]{
+        border-radius: 0px;
+        border:0px;
+        box-shadow:none;
+        padding: .10em 2.2em 5em;
+      }
+
+      @media only screen and (min-width: 900px) {
+          /* tablets and desktop */
+          polymer-ui-carousel {
+            width: 800px;
+          }
+      }
+
+      @media only screen and (min-width: 768px) and (max-width: 899px) {
+          /* tablets and desktop */
+          polymer-ui-carousel {
+            width: 700px;
+          }
+      }
+
+      @media only screen and (max-width: 767px) {
+          /* phones */
+          polymer-ui-carousel {
+            width: 400px;
+          }          
+      }
+
+      @media only screen and (max-width: 350px) {
+          /* phones */
+          polymer-ui-carousel {
+            width: 300px;
+          } 
+
+          code[class*="language-"]{
+            font-size: 8px;
+          }  
+
+          polymer-ui-carousel ^^ #controls {
+            display: none;
+          }         
+      }
+    </style>
+  </head>
+  <body class="polymer-ui-body-text polymer-ui-full-bleed polymer-ui-light-bg" unresolved>
+
+  <polymer-ui-carousel textLabels="false">
+    <div>  
+      <code class="language-markup">
+&lt;link rel=&quot;import&quot; href=&quot;../bower_components/polymer/polymer.html&quot;&gt;
+
+&lt;polymer-element name=&quot;my-element&quot; noscript&gt;
+  &lt;template&gt;
+    &lt;span&gt;Hello from &lt;b&gt;my-element&lt;/b&gt;. This is my Shadow DOM.&lt;/span&gt;
+  &lt;/template&gt;
+&lt;/polymer-element&gt;
+      </code>
+      <span class="description">
+Polymer provides extra goodies for creating declarative, souped-up custom elements. We call these “Polymer elements”. From the outside they look just like any other DOM element, but inside they’re filled with handy features like two-way data binding.
+      </span>
+    </div>
+    <div>  
+      <code class="language-markup">
+&lt;link rel=&quot;import&quot; href=&quot;../bower_components/polymer/polymer.html&quot;&gt;
+&lt;link rel=&quot;import&quot; href=&quot;../bower_components/polymer-ajax/polymer-ajax.html&quot;&gt;
+
+&lt;polymer-element name=&quot;my-element&quot; noscript&gt;
+  &lt;template&gt;
+    &lt;span&gt;I'm &lt;b&gt;my-element&lt;/b&gt;. This is my Shadow DOM.&lt;/span&gt;
+    &lt;polymer-ajax url=&quot;http://example.com/json&quot; auto response=&quot;{{resp}}&quot;&gt;
+    &lt;/polymer-ajax&gt;
+    &lt;textarea value=&quot;{{resp}}&quot;&gt;&lt;/textarea&gt;
+  &lt;/template&gt;
+&lt;/polymer-element&gt;
+      </code>
+      <span class="description">
+By composing simple elements together we can build richer, more complex components. To reuse other elements in your &lt;polymer-element&gt;, install the element in your app.
+      </span>
+    </div>
+       <div>  
+      <code class="language-markup">
+&lt;link rel=&quot;import&quot;
+      href=&quot;/components/polymer/polymer.html&quot;&gt;
+
+&lt;polymer-element name=&quot;proto-element&quot;&gt;
+  &lt;template&gt;
+    &lt;span&gt;I'm &lt;b&gt;proto-element&lt;/b&gt;. Check out my prototype.&lt;/span&gt;
+  &lt;/template&gt;
+  &lt;script&gt;
+    Polymer('proto-element', {
+      ready: function() {
+        //...
+      }
+    });
+  &lt;/script&gt;
+&lt;/polymer-element&gt;
+      </code>
+      <span class="description">
+When you’re creating a new element, you’ll often need to expose a public API so users can configure it. To define a public API, include a &lt;script&gt; tag that calls Polymer('your-tagname'). The Polymer(...) constructor is a convenience wrapper for document.registerElement.
+      </span>
+    </div>
+        <div>  
+      <code class="language-markup">
+&lt;link rel=&quot;import&quot; href=&quot;/components/polymer/polymer.html&quot;&gt;
+
+&lt;polymer-element name=&quot;ready-element&quot;&gt;
+  &lt;template&gt;
+    This element has a ready() method.
+    &lt;span id=&quot;el&quot;&gt;Not ready...&lt;/span&gt;
+  &lt;/template&gt;
+  &lt;script&gt;  
+    Polymer('ready-element', {
+      owner: &quot;Daniel&quot;,
+      ready: function() {
+        this.$.el.textContent = this.owner +
+                                &quot; is ready!&quot;;
+      }
+    });
+  &lt;/script&gt;
+&lt;/polymer-element&gt;
+      </code>
+      <span class="description">
+Lifecycle callbacks are special methods you can define on your element which fire when the element goes through important transitions.
+      </span>
+    </div>
+  </polymer-ui-carousel>
+
+
+  </body>
+</html>

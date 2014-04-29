@@ -1,0 +1,18 @@
+{
+  "name": "x-file-document",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "polymer-ajax": "Polymer/polymer-ajax#master"
+  },
+  "homepage": "https://github.com/Polymer/x-file-document",
+  "_release": "19ae41495e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "19ae41495e0474b6cc9688f832051305526f6ea6"
+  },
+  "_source": "git://github.com/Polymer/x-file-document.git",
+  "_target": "master",
+  "_originalSource": "Polymer/x-file-document"
+}

@@ -1,0 +1,26 @@
+<!doctype html>
+
+<head>
+<title>Gotta catch 'em all</title>
+
+<script src="bower_components/polymer/polymer.min.js"></script>
+<script>
+    if (!window.Polymer) {
+        var script = document.createElement('script');
+        script.src = 'http://www.polymer-project.org/polymer.min.js?20131107';
+        document.head.appendChild(script);
+    }
+</script>
+
+<link rel="import" href="x-pokemon.html">
+</head>
+
+<body>
+    <p>
+        <input
+            value="pikachu"
+            oninput="document.querySelector('x-pokemon').name = this.value">
+    </p>
+
+    <x-pokemon name="pikachu"></x-pokemon>
+</body>

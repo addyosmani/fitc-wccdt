@@ -1,0 +1,13 @@
+{
+  "name": "01",
+  "version": "0.0.0",
+  "dependencies": {
+    "platform": "Polymer/platform#master",
+    "yt-search": "Polymer/yt-search",
+    "yt-video": "Polymer/yt-video"
+  },
+  "devDependencies": {},
+  "resolutions": {
+    "platform": "master"
+  }
+}

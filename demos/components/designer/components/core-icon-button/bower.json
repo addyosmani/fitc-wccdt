@@ -1,0 +1,7 @@
+{
+  "name": "core-icon-button",
+  "private": true,
+  "dependencies": {
+    "core-icon": "Polymer/core-icon#master"
+  }
+}

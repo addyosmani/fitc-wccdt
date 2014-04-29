@@ -1,0 +1,13 @@
+{
+  "name": "github",
+  "homepage": "https://github.com/michael/github",
+  "_release": "ff5e99c5d5",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "ff5e99c5d5a4c2ee8f17448772b1dd646ae89f74"
+  },
+  "_source": "git://github.com/michael/github.git",
+  "_target": "master",
+  "_originalSource": "michael/github"
+}

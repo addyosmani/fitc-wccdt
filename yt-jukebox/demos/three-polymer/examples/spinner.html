@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+        <link rel="stylesheet" href="elements/polymer-flex-layout/polymer-flex-layout.css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+        <script src="../vendor/polymer.min.js" debug></script>
+        <style type="text/css"> 
+            html, body {
+                height: 100%;
+                overflow: hidden;
+            }
+            code-interactive {
+                height: 100%;   
+            }
+        </style>
+        <link rel="import" href="interactive.html"/>
+        <link rel="import" href="../elements/three-scene.html"/>
+    </head>
+    <body flexbox>
+        <a href="https://github.com/JoshGalvin/three-polymer"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+        <code-interactive flex></code-interactive>
+        <div flex v-flexbox>
+            
+            <div id="target" flex flexbox>
+                <polymer-element name="game-spinner" extends="three-mesh">
+                    <template>
+                        <three-sphere radius="5" widthSegments="16" heightSegments="16"></three-sphere>
+                        <three-meshmaterial type="basic" color="0x0000CC"></three-meshmaterial>
+                    </template>
+                    <script>
+                        Polymer("game-spinner", {
+                            tick: function(delta) {
+                                this.three.rotation.x += delta;            
+                            }
+                        });
+                    </script>
+                </polymer-element>
+                
+                <three-scene flex>
+                    <three-camera x="20" y="20" z="20" lookAt="sphereMesh"></three-camera>
+                    
+                    <three-meshmaterial type="basic" color="0xCC0000" id="sphereMaterial" wireframe="true"></three-meshmaterial>
+                    <three-sphere radius="5" widthSegments="16" heightSegments="16" id="sphereGeom"></three-sphere>
+                    <three-mesh id="sphereMesh" geometry="sphereGeom" material="sphereMaterial"></three-mesh>
+                    
+                    <three-mesh x="1" y="0" z="5">
+                        <three-sphere radius="5"  widthSegments="16" heightSegments="16"></three-sphere>
+                        <three-meshmaterial type="basic" color="0x00CC00"></three-meshmaterial>
+                    </three-mesh>
+                    
+                    <game-spinner x="2" y="1" z="5"></game-spinner>
+                </three-scene>
+            </div>
+            <button class="pure-button pure-button-primary" onclick="document.querySelector('code-interactive').update();"><i class="fa fa-caret-square-o-right"></i> Update</button>
+        </div>
+    </body>
+</html>

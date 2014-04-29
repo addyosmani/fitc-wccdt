@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="vendor/polymer.min.js" debug></script>
+        <style type="text/css">
+            html, body {
+                margin: 0px;
+                padding: 0px;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+        </style>
+
+    </head>
+    <body>
+        <a href="https://github.com/JoshGalvin/three-polymer"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+        
+        <polymer-element name="game-spinner" extends="three-mesh">
+            <template>
+                <three-sphere radius="5" widthSegments="16" heightSegments="16"></three-sphere>
+                <three-meshmaterial type="basic" color="0x0000CC"></three-meshmaterial>
+            </template>
+            <script>
+                Polymer("game-spinner", {
+                    tick: function(delta) {
+                        this.three.rotation.x += delta;            
+                    }
+                });
+            </script>
+        </polymer-element>
+        
+        <three-scene style="height: 100%; width: 100%">
+            <three-camera x="20" y="20" z="20" lookAt="sphereMesh"></three-camera>
+            
+            <three-meshmaterial type="basic" color="0xCC0000" id="sphereMaterial" wireframe="true"></three-meshmaterial>
+            <three-sphere radius="5" widthSegments="16" heightSegments="16" id="sphereGeom"></three-sphere>
+            <three-mesh id="sphereMesh" geometry="sphereGeom" material="sphereMaterial"></three-mesh>
+            
+            <three-mesh id="broken" x="1" y="0" z="5">
+                <three-sphere radius="5"  widthSegments="16" heightSegments="16"></three-sphere>
+                <three-meshmaterial type="basic" color="0x00CC00"></three-meshmaterial>
+            </three-mesh>
+            
+            <three-mesh material="sphereMaterial"> 
+                <three-cube width="15" height="15" depth="5"></three-cube>
+            </three-mesh>
+            
+            
+            <three-mesh>
+                <three-torus></three-torus>
+                <three-meshmaterial type="lambert" texture="examples/resources/grass.jpg"></three-meshmaterial>
+            </three-mesh>
+            
+            <game-spinner x="2" y="1" z="5"></game-spinner>
+        </three-scene>
+        
+        <link rel="import" href="elements/three-scene.html"/>
+    </body>
+</html>

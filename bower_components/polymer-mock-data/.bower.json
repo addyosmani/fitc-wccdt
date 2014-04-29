@@ -1,0 +1,18 @@
+{
+  "name": "polymer-mock-data",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#0.2.0"
+  },
+  "version": "0.2.0",
+  "homepage": "https://github.com/Polymer/polymer-mock-data",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.0",
+    "commit": "7612bd2341d6a1e8cf386ef05ade042d7cec6d47"
+  },
+  "_source": "git://github.com/Polymer/polymer-mock-data.git",
+  "_target": "0.2.0",
+  "_originalSource": "Polymer/polymer-mock-data"
+}

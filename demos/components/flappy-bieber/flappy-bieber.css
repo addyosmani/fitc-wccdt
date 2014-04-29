@@ -1,0 +1,6 @@
+  html {
+    background-color: #111;
+    background-image: radial-gradient(center, ellipse cover, #111111 0%, #000000 100%);
+    font-family: Inconsolata, monospace;
+    overflow: hidden;
+  }

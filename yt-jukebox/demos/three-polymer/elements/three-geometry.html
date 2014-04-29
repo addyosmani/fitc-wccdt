@@ -1,0 +1,40 @@
+<script>
+    (function() {
+        var geoms = {
+            "Sphere": ["radius", "widthSegments", "heightSegments", "phiStart", "phiLength", "thetaStart", "thetaLength"],
+            "Circle": ["radius", "segments", "thetaStart", "thetaLength"],
+            "Cube": ["width", "height", "depth", "widthSegments", "heightSegments", "depthSegments"],
+            "Cylinder": ["radiusTop", "radiusBottom", "height", "radiusSegments", "heightSegments", "openEnded"],
+            "Icosahedron": ["radius", "detail"],
+            "Octahedron": ["radius", "detail"],
+            "Plane": ["width", "height", "widthSegments", "heightSegments"],
+            "Tetrahedron": ["radius", "detail"],
+            "Torus": ["radius", "tube", "radialSegments", "tubularSegments"],
+            "TorusKnot": ["radius", "tube", "radialSegments", "tubularSegments", "p", "q", "heightScale"]
+        };
+        
+        Object.keys(geoms).forEach(function(type) {
+            var defaults = new THREE[type+"Geometry"](),
+                GeomPoly = {
+                    args: geoms[type],
+                    type: type,
+                    ready: function() {
+                        if(!this.three) {
+                            var args = this.args.map(function(key) { return this[key]; }.bind(this));
+                            this.three = POLYTHREE.bindConstructor(THREE[this.type+"Geometry"], args);
+                        }
+                    }
+                };
+            
+            geoms[type].forEach(function(key) { 
+                GeomPoly[key] = defaults[key];
+            });
+            
+            Polymer("three-"+type.toLowerCase(), GeomPoly);
+            var el = document.createElement("div");
+            el.innerHTML = '\
+                <polymer-element name="three-'+type.toLowerCase()+'" attributes="'+geoms[type].join(" ")+'"></polymer-element>';
+            document.body.appendChild(el);
+        });
+    } ());
+</script>

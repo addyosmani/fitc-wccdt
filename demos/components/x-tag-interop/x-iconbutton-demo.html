@@ -1,0 +1,77 @@
+﻿<!doctype html>
+<html>
+<head>
+  <title></title>
+  <script src="../platform/platform.js"></script>
+  <link rel="import" href="x-iconbutton.html">
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+  <style>
+    code {
+      display: block;
+      margin-bottom: .5em;
+    }
+  </style>
+</head>
+<body>
+  <header><h1>X-Iconbutton demos</h1></header>
+  <h2>Basic initialization</h2>
+  <ul>
+    <li>
+      <span>Left icon (default):</span>
+      <x-iconbutton src="http://placecage.com/30/30">Hello</x-iconbutton>
+      <code class="prettyprint">
+          &lt;x-iconbutton src=&quot;http://placecage.com/30/30&quot;&gt;Hello&lt;/x-iconbutton&gt;
+      </code>
+    </li>
+    <li>
+      <span>Left icon (specified):</span>
+      <x-iconbutton src="http://placecage.com/30/30" icon-anchor="left">Hello</x-iconbutton>
+      <code class="prettyprint">
+          &lt;x-iconbutton src=&quot;http://placecage.com/30/30&quot; icon-anchor=&quot;left&quot;&gt;Hello&lt;/x-iconbutton&gt;
+      </code>
+    </li>
+    <li>
+      <span>Right icon:</span>
+      <x-iconbutton src="http://placecage.com/30/30" icon-anchor="right">Hello</x-iconbutton>
+      <code class="prettyprint">
+          &lt;x-iconbutton src=&quot;http://placecage.com/30/30&quot; icon-anchor=&quot;right&quot;&gt;Hello&lt;/x-iconbutton&gt;
+      </code>
+    </li>
+    <li>
+      <span>Top icon:</span>
+      <x-iconbutton src="http://placecage.com/30/30" icon-anchor="top">Hello</x-iconbutton>
+      <code class="prettyprint">
+          &lt;x-iconbutton src=&quot;http://placecage.com/30/30&quot; icon-anchor=&quot;top&quot;&gt;Hello&lt;/x-iconbutton&gt;
+      </code>
+    </li>
+    <li>
+      <span>Bottom icon:</span>
+      <x-iconbutton src="http://placecage.com/30/30" icon-anchor="bottom">Hello</x-iconbutton>
+      <code class="prettyprint">
+          &lt;x-iconbutton src=&quot;http://placecage.com/30/30&quot; icon-anchor=&quot;bottom&quot;&gt;Hello&lt;/x-iconbutton&gt;
+      </code>
+    </li>
+    <li>
+      <span>No content:</span>
+      <x-iconbutton src="http://placecage.com/30/30"></x-iconbutton>
+      <code class="prettyprint">
+          &lt;x-iconbutton src=&quot;http://placecage.com/30/30&quot;&gt;&lt;/x-iconbutton&gt;
+      </code>
+    </li>
+    <li>
+      <span>No Icon (ie: normal button):</span>
+      <x-iconbutton>Hello</x-iconbutton>
+      <code class="prettyprint">
+          &lt;x-iconbutton&gt;Hello&lt;/x-iconbutton&gt;
+      </code>
+    </li>
+    <li>
+      <span>No content at all:</span>
+      <x-iconbutton></x-iconbutton>
+      <code class="prettyprint">
+          &lt;x-iconbutton&gt;&lt;/x-iconbutton&gt;
+      </code>
+    </li>
+  </ul>
+</body>
+</html>

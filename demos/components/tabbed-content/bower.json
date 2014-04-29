@@ -1,0 +1,28 @@
+{
+  "name": "tabbed-content",
+  "version": "0.0.0",
+  "homepage": "https://github.com/addyosmani/addyosmani.github.com",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "web-components"
+  ],
+  "authors": [
+    "Addy Osmani"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "~0.2.1",
+    "polymer-ui-tabs": "Polymer/polymer-ui-tabs#~0.2.1",
+    "polymer-ui-animated-pages": "Polymer/polymer-ui-animated-pages#~0.2.1",
+    "polymer-flex-layout": "Polymer/polymer-flex-layout#~0.2.1"
+  }
+}

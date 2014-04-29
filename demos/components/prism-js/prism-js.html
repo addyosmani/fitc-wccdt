@@ -1,0 +1,56 @@
+<!-- include polymer -->
+<link rel="import" href="components/polymer/polymer.html">
+
+<!-- include prism -->
+<script src="components/prismjs/prism.js"></script>
+
+<!-- include he for escaping -->
+<script src="components/he/he.js"></script>
+
+<!-- line number support -->
+<script src="assets/line-numbers.js"></script>
+<link rel="stylesheet" href="assets/line-numbers.css">
+
+<!--
+/**
+ * @module prism-js
+ */
+/**
+ * Element syntax highlighting via Prism.js
+ *
+ * Examples:
+ *
+ * @class prism-js
+ * @blurb Syntax highlighting with Prism.js
+ * @author Addy Osmani
+ * @categories Highlighting
+ *
+ */
+-->
+<polymer-element name="prism-js" attributes="language linenumbers escape">
+<template>
+	<style>
+		:host { display: block;};
+	</style>
+	<pre class="{{ {'line-numbers': linenumbers} | tokenList }}">
+		<code id="codeviewer" class="language-{{language}}"></code>
+</pre>
+</template>
+  <script>
+    (function() {
+      Polymer('prism-js', {
+      	language: '*',
+      	linenumbers: false,
+      	escape: false,
+        attached: function() {
+        	if(this.escape){
+        		this.innerHTML = he.encode(this.innerHTML);
+        	}
+
+	    	this.$.codeviewer.innerHTML = this.innerHTML;
+	    	Prism.highlightElement(this.$.codeviewer);
+        }
+      });
+    })();
+  </script>
+</polymer-element>

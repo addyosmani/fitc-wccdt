@@ -1,0 +1,22 @@
+<link rel="import" href="../bower_components/polymer-ajax/polymer-ajax.html" />
+
+<polymer-element name="youtube-videos" attributes="query">
+  <template>
+    <polymer-ajax url="http://gdata.youtube.com/feeds/api/videos/" params="{{params}}"
+                  handleAs="json" response="{{response}}" auto></polymer-ajax>
+    <ul>
+      <template repeat="{{entry in response.feed.entry}}">
+        <li>{{entry.title.$t}}</li>
+     </template>
+    </ul>
+  </template>
+  <script>
+    Polymer('youtube-videos', {
+      ready: function() {
+        this.params = {alt: 'json', q: this.query};
+      }
+    });
+  </script>
+</polymer-element>
+
+<youtube-videos query="cats"></youtube-videos>

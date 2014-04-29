@@ -1,0 +1,316 @@
+<!--
+ https://github.com/stevenrskelton/sortable-table
+-->
+<polymer-element name="sortable-table" attributes="data columns sortColumn sortDescending rowSelection multiSelect selected selectedRowStyle headerTemplate cellTemplate checkbox pageSize page">
+<template>
+	<table>
+		<tr on-click="{{changeSort}}">
+			<template if="{{checkbox!=undefined}}">
+				<th style="width:1em"><input type="checkbox" on-change="{{checkall}}" hidden?="{{!multiSelect}}" checked?="{{data.length==selected.length}}"></th>
+			</template>
+			<template repeat="{{column in columns}}">
+				<template ref="{{column.headerTemplate || headerTemplate}}" bind>
+					<th style="{{sortColumn==column.name && sortDescending ? 'text-decoration:overline;' : ''}}
+					{{sortColumn==column.name && !sortDescending ? 'text-decoration:underline;' : ''}}">{{!(column.title) ? column.name : column.title}}</th>
+				</template>
+			</template>
+		</tr>
+		<template repeat="{{row in data | sortByKey(sortColumn, sortDescending, columns, selected, (selected || []).length + data.length, pageSize, page)}}">
+			<tr on-click="{{rowSelect}}" style="{{row.selected && selectedRowStyle ? selectedRowStyle : ''}}">
+				<template if="{{checkbox!=undefined}}">
+					<td><input type="checkbox" on-change="{{checkedbox}}" checked?="{{row.selected}}"></td>
+				</template>
+				<template repeat="{{column in columns}}">
+					<template bind="{{templateData in row.data | computeTemplateData(column)}}">
+						<template ref="{{column.cellTemplate || cellTemplate}}" bind="{{templateData}}">
+							<td>{{value}}</td>
+						</template>
+					</template>
+				</template>
+			</tr>
+		</template>
+		<template if="{{showFooter}}">
+			<tr>
+				<template if="{{checkbox!=undefined}}">
+					<td></td>
+				</template>
+				<template repeat="{{column in columns}}">
+					<template bind="{{templateData in data | selectProperty(column)}}">
+						<template ref="{{column.footerTemplate}}" bind="{{templateData}}">
+							<td class="sortable-table-header" style="border:0;"></td>
+						</template>
+					</template>
+				</template>
+			</tr>
+		</template>
+	</table>
+</template>
+
+<script>
+	function isArray(a){
+		return Object.prototype.toString.call(a)==='[object Array]';
+	}
+	PolymerExpressions.prototype.sortByKey = function(array, key, desc, columns, selected, l, pageSize, page) {
+		//ignore 6th parameter, it's for observe.js watch only
+		var sortedArray = array.sort(function(a, b) {
+			var x, y;
+			//determine if computed field
+			var formula = null;
+			for(var i=0;i<columns.length;i++){
+				if(columns[i].name===key){
+					formula = columns[i].formula;
+					break;
+				}
+			}
+			if(formula){
+				x = formula(a);
+				y = formula(b);
+			}else{
+				x = a[key];
+				y = b[key];
+			}
+
+			if(typeof x == 'undefined' || typeof y == 'undefined'){
+				//sort undefined after
+				if(typeof x == 'undefined'){
+					return !desc;
+				}else{
+					return desc;
+				}
+			}else{
+				if (typeof x == "string" && typeof y == "string"){
+					x = x.toLowerCase();
+					y = y.toLowerCase();
+				}
+				if(desc){
+					return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+				}else{
+					return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+				}
+			}
+		});
+		var r = [];
+		var isMultiSelect = isArray(selected);
+
+		if(page < 1) page = 1;
+
+		var start = (pageSize > -1) ? Math.min(pageSize * (page - 1), sortedArray.length) : 0;
+		var end = (pageSize > -1) ? Math.min(start + pageSize*1, sortedArray.length) : sortedArray.length;
+
+		for(var i=start;i<end;i++){
+			var isSelected = isMultiSelect ? selected.indexOf(sortedArray[i]) > -1 : selected == sortedArray[i];
+			r.push({selected: isSelected, data: sortedArray[i]});
+		}
+		return r;
+	};
+	PolymerExpressions.prototype.computeTemplateData = function(row, column) {
+		var value;
+		if(column.formula){
+			value = column.formula(row);
+		}else{
+			value = row[column.name];
+		}
+		return { row: row, value: value, column: column };
+	};
+	PolymerExpressions.prototype.selectProperty = function(objects, column) {
+		var arr = [];
+		var rowArr = [];
+		for(var i=0;i<objects.length;i++){
+			var row = objects[i];
+			var value;
+			if(column.formula){
+				value = column.formula(row);
+			}else{
+				value = row[column.name];
+			}
+			rowArr.push(row[column.name]);
+			arr.push(value);
+		}
+		return { values: arr, rowValues: rowArr, column: column };
+	};
+	PolymerExpressions.prototype.contains = function(arr, obj) {
+		if(arr){
+			return arr.indexOf(obj) > -1;
+		}else{
+			return false;
+		}
+	};
+	PolymerExpressions.prototype.sum = function(arr) {
+		return arr.reduce(function(a, b) { return a + b; }, 0);
+	};
+	PolymerExpressions.prototype.average = function(arr) {
+		if(arr.length==0){
+			return 0;
+		}else{
+			return arr.reduce(function(a, b) { return a + b; }, 0) / arr.length;
+		}
+	};
+	Polymer('sortable-table', {
+		data: [],
+		columns: null,
+		sortColumn: null,
+		sortDescending: false,
+		selected: null,
+		pageSize: -1,
+		page: 1,
+		changeSort: function(e,p){
+			if(e.target.templateInstance.model.column){
+				var clickedSortColumn = e.target.templateInstance.model.column.name;
+				if(clickedSortColumn == this.sortColumn){
+					//column already sorted, reverse sort
+					this.sortDescending = !this.sortDescending;
+				}else{
+					this.sortColumn = clickedSortColumn;
+				}
+			}
+		},
+		selectedRowStyle: 'background-color:rgba(0,96,200,0.2);',
+		rowSelection: false,
+		multiSelect: false,
+		rowSelect: function(e,p){
+			if(this.rowSelection && e.target.templateInstance && e.target.nodeName!='INPUT'){
+				var row = e.target.templateInstance.model.row;
+				this.toggleRowFromSelected(row);
+			}
+		},
+		toggleRowFromSelected: function(row){
+			if(isArray(this.selected)){
+				var index = this.selected.indexOf(row);
+				if(index>-1){
+					this.selected.splice(index, 1);
+				}else{
+					this.selected.push(row);
+				}
+			}else{
+				this.selected = row;
+			}
+		},
+		importedTemplates: [],
+		columnWatches: [],
+		showFooter: false,
+		columnsChanged: function(){
+			var self = this;
+			/* watch templateIds since if added/modified we need to copy those templates into the shadow dom */
+			function addTemplateWatches(column, field){
+				for(var i=0;i<self.columnWatches.length;i++){
+					if(self.columnWatches[i].object_==column && self.columnWatches[i].path_[0]==field) return;
+				}
+				var observer = new PathObserver(c, field);
+				self.columnWatches.push(observer);
+				observer.open(function(added, removed, changed, getOldValueFn) {
+					self.columnsChanged();
+				});
+			}
+			for(var i=0;i<this.columns.length;i++){
+				var c = this.columns[i];
+				this.addTemplateIfNotInDocument(c.cellTemplate);
+				this.addTemplateIfNotInDocument(c.headerTemplate);
+				this.addTemplateIfNotInDocument(c.footerTemplate);
+				if(c.footerTemplate) this.showFooter = true;
+				addTemplateWatches(c,'cellTemplate');
+				addTemplateWatches(c,'headerTemplate');
+				addTemplateWatches(c,'footerTemplate');
+			}
+		},
+		dataChanged: function(){
+			if(!this.columns && this.data && this.data.length > 0){
+				var c = [];
+				var unique = [];
+				for(var i=0;i<this.data.length;i++){
+					Object.keys(this.data[i]).forEach(function(property) {
+						if (unique.indexOf(property)==-1) {
+							unique.push(property);
+							c.push({name: property});
+						}
+					});
+				}
+				this.columns = c;
+			}
+		},
+		rowSelectionChanged: function(a,val){
+			this.shadowRoot.querySelector('table').style.cursor=(val ? 'pointer' : 'auto');
+		},
+		multiSelectChanged: function(a,val){
+			if(val){
+				if(!isArray(this.selected)){
+					if(this.selected) this.selected = [this.selected];
+					else this.selected = [];
+				}
+			}else if(isArray(this.selected)){
+				if(this.selected.length > 0) this.selected = this.selected[0];
+				else this.selected = null;
+			}
+		},
+		selectedChanged: function(a,val){
+			if(val!=undefined){
+				if(isArray(val)){
+					if(!this.multiSelect) this.multiSelect = true;
+				}else{
+					if(this.multiSelect) this.multiSelect = false;
+				}
+			}
+		},
+		cellTemplateChanged: function(a, t){ this.addTemplateIfNotInDocument(t); },
+		headerTemplateChanged: function(a, t){ this.addTemplateIfNotInDocument(t); },
+		addTemplateIfNotInDocument: function(templateId){
+			/* copy template from parent document into shadow dom */
+			if(templateId && !this.shadowRoot.getElementById(templateId)){
+				var t = this.ownerDocument.getElementById(templateId);
+				if(t){
+					this.shadowRoot.appendChild(t);
+					this.importedTemplates.push(t);
+				}else{
+					//TODO: in some cases on refresh, template isn't in ownerDocument.
+					//So store them in an importedTemplates array :(
+					for(var i=0;i<this.importedTemplates.length;i++){
+						this.shadowRoot.appendChild(this.importedTemplates[i]);
+					}
+				}
+			}
+		},
+		checkedbox: function(e,p){
+			var row = e.target.templateInstance.model.row;
+			this.toggleRowFromSelected(row.data);
+			e.preventDefault();
+		},
+		checkall: function(e,p){
+			if(e.target.checked){
+				for(var i=0;i<this.data.length;i++){
+					if(this.selected.indexOf(this.data[i])==-1) this.selected.push(this.data[i]);
+				}
+			}else{
+				this.selected = [];
+			}
+		}
+	});
+</script>
+<style>
+	sortable-table table {
+		width: inherit;
+		border-collapse: collapse;
+	}
+	sortable-table table tr:nth-of-type(even) {
+		background-color: rgba(255,255,224,0.25);
+	}
+	sortable-table table .sortable-table-header,
+	sortable-table table th {
+		background: #555;
+		color: white;
+		font-weight: bold;
+		text-align: center;
+	}
+	sortable-table table td,
+	sortable-table table th {
+		padding: 6px;
+		border: 1px solid #ccc;
+		text-align: right;
+	}
+	sortable-table table th {
+		text-align: center;
+		cursor: pointer;
+	}
+	sortable-table table td:first-of-type {
+		text-align: left;
+	}
+</style>
+</polymer-element>

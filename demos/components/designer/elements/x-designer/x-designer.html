@@ -1,0 +1,120 @@
+<link rel="import" href="../../components/core-layout/core-layout.html">
+<link rel="import" href="../../components/polymer-ui-splitter/polymer-ui-splitter.html">
+<link rel="import" href="../x-designable/x-designable.html">
+<link rel="import" href="../x-palette/x-palette.html">
+<link rel="import" href="../x-tree/x-tree.html">
+
+<polymer-element name="x-designer" attributes="selected maximized">
+<template>
+
+  <link rel="stylesheet" href="x-designer.css">
+
+  <x-meta id="meta" categories="{{elements}}"></x-meta>
+
+  <core-layout></core-layout>
+
+  <section id="tools">
+    <core-layout vertical></core-layout>
+    <x-palette core-flex id="palette" elements="{{elements}}" canvas="{{$.canvas}}" on-palette-drag="{{paletteDrag}}" on-palette-create-drag-object="{{paletteCreateDragObject}}"></x-palette>
+    <polymer-ui-splitter direction="down"></polymer-ui-splitter>
+    <x-tree id="tree" canvas="{{$.canvas}}" selected="{{selected}}"></x-tree>
+  </section>
+
+  <x-designable core-flex id="canvas" tabIndex="-1" selected="{{selected}}" on-design-change="{{designChange}}"></x-designable>
+
+</template>
+<script>
+
+  Polymer('x-designer', {
+
+    maximized: false,
+    selectedTab: 'design',
+
+    ready: function() {
+      this.fire('designer-ready');
+    },
+
+    paletteDrag: function(event, drag) {
+      this.$.canvas.drag(drag);
+    },
+
+    paletteCreateDragObject: function(event, detail) {
+      detail.element = this.createElement(detail.tag);
+      this.$.canvas.makeElementDraggable(detail.element);
+    },
+
+    designChange: function() {
+      this.$.canvas.update();
+      this.$.tree.update();
+    },
+
+    createElement: function(tag) {
+      var meta = this.$.meta.byId(tag);
+      var element = meta.createElement();
+      this.$.canvas.addElement(element);
+      return element;
+    },
+
+    deleteElement: function() {
+      this.$.canvas.deleteElement();
+    },
+
+    promoteElement: function() {
+      this.$.canvas.promoteElement();
+    },
+
+    demoteElement: function() {
+      this.$.canvas.demoteElement();
+    },
+
+    selectParentElement: function() {
+      this.$.canvas.selectParentElement();
+    },
+
+    maximizedChanged: function() {
+      this.$.tools.classList.toggle('maximized', this.maximized);
+      this.$.canvas.classList.toggle('maximized', this.maximized);
+      this.$.canvas.dragDisabled = this.maximized;
+    },
+
+    inspectTarget: function(event) {
+      var t = event.target;
+      if (t) {
+        if (t === this.$.canvas) {
+          this.selected = null;
+        } else {
+          // don't allow selection within a node with meta.hideSubtree
+          var n = t;
+          while (n) {
+            if (n.meta && n.meta.hideSubtree) {
+              t = n;
+              break;
+            }
+            n = n.parentNode;
+          }
+          this.selected = t;
+        }
+        Platform.flush();
+      }
+    },
+
+    'import': function(urls, callback) {
+      var imports = urls.map(function(u) {
+        return '../' + u;
+      }, this);
+      Polymer.import(imports, callback);
+    },
+
+    loadHtml: function(html) {
+      this.$.canvas.loadHtml(html);
+    },
+
+    applyPropertyBinding: function(obj, name, path) {
+      this.$.canvas.applyPropertyBinding(obj, name, path);
+    }
+
+  });
+
+</script>
+
+</polymer-element>

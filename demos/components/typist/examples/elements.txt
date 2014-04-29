@@ -1,0 +1,202 @@
+
+INTRO
+
+There's been a techtonic shift in web standards over the past year. The set of platform features I'm the most excited about are Web Components. Today I'm going to talk to you about them.
+
+Now at the start of the web we had tags. Form, select. You'd build your pages out of these tags and they had meaning. 
+
+They had encapsulation. Inform the page if an interesting event happened.
+
+The way we build apps on the frontend these days is a little wonky. 
+
+You're either copying large chunks of HTML from a boilerplate 
+
+like Bootstrap or sprinkling your page with plugins and widgets that need to be configured with JavaScript.
+
+We have to choose between bloated HTML, bloated JS or both. 
+
+Ideally, HTML would be expressive enough to let us fill in the gaps with our own tags. 
+
+Web Components enable that.
+
+
+SOME EXAMPLES
+
+
+Polymer
+
+Some of you, you might have heard of Polymer. or come to our website.
+
+It says, Polymer is a new type of library for the web. Built on top of web components. 
+
+Designed to leverage the evolving web platform on modern browsers.
+
+When you start investigating a little further you might ask. 
+
+What is Polymer? Is it a set of Polyfills? a framework? a set of UI widgets?..yeah its that too.
+
+
+NEXT SLIDE
+
+So in order to understand where we're going we have to understand where we've been. So this is what the web looks like today. 
+
+Transport yourself back in time to an earlier day. Google.com back in 1998. This is probably what your first page looked like. 
+
+You had a couple of elements to play with. The form tag. Selects. Dropdowns. List elements. Radio.
+
+The platform was pretty limited in what we could do but we didnt need any more than that. 
+
+
+NEXT SLIDE
+
+Select is actually an awesome element. 
+
+With select, you can put some options in this thing and it just knows what to do with those options. 
+
+With these children elements. What you get out of it is some default UI. 
+
+You dont have to touch CSS. Dont have to do anything too crazy. Think of it as an early component for the web. Native component.
+
+NEXT SLIDE
+
+This is your classic example of running out of shwag at a conference. Everything is gone. Nothing is available but that double XL tshirt.
+
+We're configuring these elements not with a bunch of scripts but just by using HTML. 
+
+Plopping in attributes on these options and getting different behaviour. So these are now grayed out and of course that XL is the only one available.
+
+NEXT SLIDE
+
+You can move attribtues to this select element itself so you can say size=4 and put the multiple attribute on it and it completely changes the way this element behaves. 
+
+The user can select multiple elements. No longer have a drop-down. 
+
+Now we have this multi-select element. Just by changing some attributes the element knows what to do with this. 
+
+NEXT SLIDE
+
+You can put other things on this tag. We can put the optgroup in there. Give it a label and you get some options in here. 
+
+Instead of your common dropdown you get a completely different UI. Super versitle. I haven't declared any code yet.
+
+Of course it has a ton of properties and methods on its DOM interface. When something interesting happens you get useful DOM events. 
+
+So select is probably more useful than you think.
+
+NEXT SLIDE
+ 
+Lets flash forward to today. Quick sanity check.
+
+Tab is probably a quintessntial component for today. What do we have to do to build a tab component for the web? When we first started we had a lot of markup.
+
+Overloading ULs and LIs and at the bottom we call a little bit of script to get it working. 
+
+Over the years we added more and mroe in JS and less in markup. Now at the point where we're using frameworks just jamming in more and more script.
+
+Ultimately theres something wrong with this picture.
+
+This is the GMAIL source if you open up the devtools. 
+
+I have no idea what is going on here. I know this is done on purpose but as a developer I have no idea what is going on. Nightmare as a developer. 
+
+NEXT SLIDE
+
+We've moved away from the select. What the web is good at. 
+
+What if..markup was meaningful again? what if creating a tab was this easy?
+
+Its really awesome because I know exactly whats going on in this picture. 
+
+Thats the universe thats relevant to the Polymer team. We want to get back to that declarative nature of the web. Reuse HTML and DOM like its first class.
+
+NEXT SLIDE
+
+So lets jump into Polymer. Quick spoiler alert. Standards are the bottom of all this stuff. 
+
+Everything im going to talk about is all based on 4 WC3 specifications.
+
+Templates
+
+Being able to define a section of the DOM to be inert and being able to stamp it out for later use.
+
+HTML imports. 
+
+So, bundling up CSS and JavaScript into a single unit and delivering it to another application. 
+
+Great if we want to have a set of components and deliver to an end user. 
+
+Custom elements
+
+Being able to define a new tag. Teach the browser new tricks. tab element. miley element.
+
+Shadow DOM is at the back of all of this. 
+
+Dont have to use it. If you do you get things like encapsulation. So the first time ever we have the ability to encapsulate styles, DOM. 
+
+Styles from the page dont bleed in to your elements. Your element styles dont bleed out to the outside world.
+
+
+"everything is an element"
+
+
+So lets talk about elements. Everything is an element. What do we mean by that.
+
+This is one example. If ajax was just part of the browser today. You'd probably use it as an element and not use a lot of browser code. 
+
+Just a bunch of tags. Really easy as a developer to know whats going on here. Maintain and use. 
+
+
+TEMPLATE
+
+Templates let you declare fragments of markup which are parsed as HTML, go unused at page load but can be instantiated later on at runtime.
+
+This template element represents a template in your markup. Contains template contents. Inert chunks of cloneable DOM. 
+
+Think of them as pieces of scaffolding you can use and reuse throughout the lifetime of your app.
+
+Its content is effectively inert until activated. Essentially, your markup is hidden DOM and does not render.
+
+
+CUSTOM ELEMENTS
+
+One could say the web lacks expression. Remember the GMail example we looked at earlier? It was div soup and yet..thats how we build apps. Its sad. We should demand more from the platform.
+
+HTML gives us a great tool for structuring a document but its vocabulary is limited to elements the HTML standard defines. 
+
+Custom elements allow us to define new types of HTML elements. They unlock the ability to define new DOM elements. Create elements that extend from other elements. Logically bundle together custom functionality into a single tag.
+
+
+HTML IMPORTS
+
+Think about how we currently load different resources on the web? For JS we have script tags. CSS we have link rel=stylesheet. 
+
+Images have <img> tag. Video has <video> and so on. The majority of the webs content has a simple and declarative way to load itself. Not for HTML.
+
+Your current options are using iframes - tried and true but heavy weight. Content lives in a separate context to your page. Very frustrating.
+
+So HTML imports are part of the Web Component cast. A way to include HTML documents in other documents. 
+
+Not limited to markup either. An import can include CSS. JavaScript or anything else an HTML file can contain. In other words, makes imports a fantastic tool for loading related HTML/CSS/JS.
+
+
+SHADOW DOM
+
+There's currently a fundamental problem that makes widgets built on HTML and JS hard to use: The DOM tree inside a widget isnt encapsulated from the rest of the page.
+
+This lack of encapsulation means that your document stylesheet might accidentally apply to parts inside the widget. 
+
+Your JavaScript might accidentally modify parts inside the widget. IDs might overlap with IDs inside the widget. so on.
+
+Shadow DOM fixes the DOM tree encapsulation problem giving you more control over what is separated. Also gives you a way to style your element, the DOM tree (shadow tree) and shadow host.
+
+
+CLOSING
+
+The four parts of Web Components are designed to work together, but you can also pick and choose which parts of Web Components to use. 
+
+
+I think Web Components will eventually usher in a new style of application development, something more akin to snapping together Legos and less like our current approach, which is often plagued by excess boilerplate. 
+
+I'm pretty excited by where all of this is heading, and I look forward to what the future might hold.
+
+

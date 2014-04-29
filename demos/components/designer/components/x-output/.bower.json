@@ -1,0 +1,17 @@
+{
+  "name": "x-output",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  },
+  "homepage": "https://github.com/Polymer/x-output",
+  "_release": "cba940d055",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "cba940d055f26a2311a926aa42d37fd73297932b"
+  },
+  "_source": "git://github.com/Polymer/x-output.git",
+  "_target": "master",
+  "_originalSource": "Polymer/x-output"
+}

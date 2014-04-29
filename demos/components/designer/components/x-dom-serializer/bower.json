@@ -1,0 +1,8 @@
+{
+  "name": "x-dom-serializer",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "x-binding": "Polymer/x-binding#master"
+  }
+}

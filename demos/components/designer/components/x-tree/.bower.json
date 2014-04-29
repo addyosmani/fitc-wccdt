@@ -1,0 +1,17 @@
+{
+  "name": "x-tree",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  },
+  "homepage": "https://github.com/Polymer/x-tree",
+  "_release": "bdabfd87e3",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "bdabfd87e343f7a7af4ad4db3ebf9a6799901ce7"
+  },
+  "_source": "git://github.com/Polymer/x-tree.git",
+  "_target": "master",
+  "_originalSource": "Polymer/x-tree"
+}

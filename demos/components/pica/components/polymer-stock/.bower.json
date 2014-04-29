@@ -1,0 +1,19 @@
+{
+  "name": "polymer-stock",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "polymer-jsonp": "Polymer/polymer-jsonp#master",
+    "polymer-media-query": "Polymer/polymer-media-query#master"
+  },
+  "homepage": "https://github.com/Polymer/polymer-stock",
+  "_release": "ccebb90dc8",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "ccebb90dc8199d2bdf4e320b3f142177e0f9e1b4"
+  },
+  "_source": "git://github.com/Polymer/polymer-stock.git",
+  "_target": "master",
+  "_originalSource": "Polymer/polymer-stock"
+}

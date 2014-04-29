@@ -1,0 +1,70 @@
+<polymer-element name="x-meme" attributes="src" on-dblclick="clickHandler" constructor="Meme">
+<template>
+<style>
+  :root {
+    -webkit-var-heading-size: 75px;
+    -webkit-var-defaultItemPadding: 1em;
+  }
+  content::-webkit-distributed(h1), content::-webkit-distributed(h2),
+  section :first-child,
+  section :last-child {
+    font: 75px/1 Impact;
+    color: white;
+    -webkit-text-stroke: 2px black;
+    margin: 0;
+    z-index: 1;
+    text-align: center;
+    text-transform: uppercase;
+    -webkit-filter: drop-shadow(1px 1px 5px black);
+  }
+  content::-webkit-distributed(h2),
+  section :last-child {
+    font-size: 50px;
+  }
+  #bg {
+    border-radius: 5px;
+    background-size: cover;
+    height: 500px;
+    position: relative;
+    margin: 10px 0;
+  }
+  #bg img {
+    position: absolute;
+    bottom: 0;
+    right:0;
+    -webkit-filter: drop-shadow(0 0 15px black);
+  }
+  @host {
+    * {
+      width: 700px;
+      /*min-width: 300px;*/
+      padding: 1em;
+      border-radius: 15px;
+      display: inline-block;
+      /*position: relative;*/
+      background: #eee;
+      box-sizing: border-box;
+    }
+  }
+</style>
+<section>
+<content select="h1"></content>
+<div id="bg"><img src="images/otherb.png"></div>
+<content select="h2"></content>
+</section>
+</template>
+<script>
+Polymer('x-meme', {
+  src: 'images/otherb.png',
+  ready: function() {
+    
+  },
+  srcChanged: function(oldVal) {
+    this.$.bg.style.background = 'url(' + this.src + ') no-repeat 20%';
+  },
+  clickHandler: function(e) {
+    //alert("Don't click me!");
+  }
+});
+</script>
+</polymer-element>

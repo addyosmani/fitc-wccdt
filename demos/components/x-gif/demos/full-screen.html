@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Toggle Button</title>
+    <script src="../dist/platform.js"></script>
+    <link rel="import" href="../dist/x-gif.html">
+    <style>
+      body { margin: 0; background-color: black; height: 100%; }
+    </style>
+  </head>
+  <body unresolved>
+    <x-gif src="http://i.imgur.com/RY2vTBQ.gif" fill ping-pong></x-gif>
+    <script>
+      window.addEventListener('polymer-ready', function () {
+        window.addEventListener('resize', function () {
+          [].forEach.call(document.querySelectorAll('x-gif'), function (elem) {
+            elem.relayout();
+          });
+        })
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html class="polymer-ui-full-bleed">
+  <head>
+    <title>polymer-ui-carousel</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <!-- load toolkit -->
+    <script src="bower_components/platform/platform.js"></script>
+
+    <!-- load element -->
+    <link rel="import" href="polymer-ui-carousel.html">
+
+    <!-- load demo styles -->
+    <link rel="stylesheet" href="bower_components/polymer-ui-base-css/base.css">
+    <link rel="stylesheet" href="smoke.css">
+    <style shim-shadowdom>
+    polymer-ui-carousel #controls button {
+      font-size: 15px;
+    }
+
+    polymer-ui-animated-pages /deep/ div {
+      display: -webkit-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 100px;
+      color: black;
+    }
+
+    /* Style the different slides */
+
+    polymer-ui-animated-pages /deep/ div:nth-child(2) {
+      background: #5bc0de; 
+    }
+
+    polymer-ui-animated-pages /deep/ div:nth-child(3) {
+      background: #fbb450;
+    }
+
+    polymer-ui-animated-pages /deep/ div:nth-child(4) {
+      background: #bd362f;
+    }
+
+    polymer-ui-animated-pages /deep/ div:nth-child(5) {
+      background: #2f96b4;
+    }
+
+    </style>
+  </head>
+
+  <body class="polymer-ui-body-text polymer-ui-full-bleed polymer-ui-light-bg" unresolved>
+
+  <polymer-ui-carousel labels="true">
+    <div title="Alpha">One</div>
+    <div title="Beta">Two</div>
+    <div title="Gamma">Three</div>
+    <div title="Delta">Four</div>
+    <div title="Epsilon">Five</div>
+  </polymer-ui-carousel>
+
+  </body>
+</html>

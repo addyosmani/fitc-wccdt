@@ -1,0 +1,8 @@
+{
+  "name": "x-file-document",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "polymer-ajax": "Polymer/polymer-ajax#master"
+  }
+}

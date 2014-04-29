@@ -1,0 +1,85 @@
+NOTE: you have two things with id search....
+fix that. maybe just style by element type.
+check attributes actually used.
+
+Maybe this just goes on a sheet of paper.
+
+>> yt-input
+
+on-yt-input-commit="{{commitAction}}"
+
+commitAction: function(e){
+  this.$.search.query = this.$.input.value;
+},
+
+>> yt-search
+
+<yt-search id="search" maxResults="{{maxResults}}" list="{{list}}"></yt-search>
+
+>> #results
+
+lead in and say..okay. so our results are ending up in a list. lets show them in the sidebar after this.
+
+<template repeat="{{list}}">
+
+uncomment the markup reading stuff from there. 
+Notice on-click ..queueVideo..
+
+queueVideo: function(e,sender,detail){
+  this.upcoming.push({
+    id: detail.id,
+    title: detail.title
+  });
+},
+
+#player
+
+>> might need a cleanup for properties. We mention videoEntry which we might not need.
+
+<yt-video id="video" muted="{{muted}}"></yt-video>
+
+ready: ...
+
+set the event listener to..
+
+yt-video-state-change
+
+if the state is ended
+this.videoEnded()
+
+videoEnded: function(){
+  this.launchPlayer(this.upcoming[0].id, this.upcoming[0].title);
+  this.archive(this.upcoming[0].id, this.upcoming[0].title);
+  this.delete(this.upcoming, this.upcoming[0].id);
+}
+
+/// unsure if this is interesting..
+
+launchPlayer: function(id, title, cue){
+  this.$.video.cue = cue || false;
+  this.$.video.videoId = id;
+  this.$.video.title = title;
+  this.youtube.videoId = id;
+  this.youtube.videoTitle = title;
+},
+
+
+>> nav
+{{ youtube.state }}
+
+.video-ratings
+
+<polymer-ui-ratings value="{{gd$rating.average}}"></polymer-ui-ratings>
+
+>> tabs, after the $history element is over.
+
+<polymer-ui-tabs selected="0">
+	<span>Upcoming</span>
+	<span>History</span>
+</polymer-ui-tabs>
+
+ready:
+
+  this.addEventListener('tab-selection-change', function(e){ 
+    switchToTab(e.detail.index);
+  });

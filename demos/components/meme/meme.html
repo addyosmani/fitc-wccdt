@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Memes on Web Components</title>
+<script src="polymer.js"></script>
+<link rel="import" href="x-meme.html">
+<style>
+body {
+  font-family: 'Impact', 'Arial';
+}
+hgroup {
+  line-height: 0;
+  background: rgba(0,0,0,0.8);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  margin-bottom: 10px;
+}
+hgroup > * {
+  margin-left: 15px;
+}
+hgroup h2 {
+  font-size: 15px;
+}
+hgroup input {
+  padding: 5px;
+}
+#main {
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  -webkit-flex-direction: column;
+  -webkit-align-items: center;
+}
+[contenteditable] {
+  outline: none;
+}
+x-meme {
+  width:700px;
+  margin-top: 15px;
+}
+</style>
+</head>
+<body>
+
+<!--Used:css variables, web fonts, css filters, css flexbox, <datalist> -->
+
+<div id="main">
+
+<hgroup>
+  <h1>MemeIt</h1>
+  <h2>Web Componentized</h2>
+  <div>
+    <input type="text" list="backgrounds" placeholder="URL to an image">
+    <datalist id="backgrounds">
+      <option value="images/fuji.jpg"></option>
+      <option value="images/canada.jpg"></option>
+      <option value="images/gg_bridge.jpg"></option>
+      <option value="images/doge.jpg"></option>
+    </datalist>
+  </div>
+</hgroup>
+
+<x-meme id="meme" src="images/fuji.jpg">
+  <h1 contenteditable>WOW. SUCH HEIGHT.</h1>
+  <h2 contenteditable>SO MOUNTAIN.</h2>
+</x-meme>
+
+</div>
+
+<script>
+(function () {
+  var meme = document.querySelector('x-meme');
+
+  document.querySelector('input').addEventListener('change', function(e) {
+    meme.src = e.target.value;//meme.srcAttributeChanged();
+  });
+})();
+</script>
+
+</body>
+</html>
+
+<!-- SO VOCABULARY MUCH WORDS -->

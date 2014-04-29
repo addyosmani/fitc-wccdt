@@ -1,0 +1,394 @@
+
+<!DOCTYPE html><html class=''>
+<head><meta charset='UTF-8'>
+
+
+<style>body{
+color:gold;
+background:black;
+font-family: Arial, Verdana;
+}
+
+#container{
+	z-index: 999;
+width:800px;
+margin-right: auto;
+margin-left: auto;
+}
+
+#game_container{
+	color:black;
+	background: #99DDFF;
+		width:500px;
+		height:500px;
+		margin-left: auto;
+		margin-right: auto;
+	position: relative;
+	overflow: hidden;
+
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+#block1{
+width:100px;
+height:100px;
+position: relative;
+}
+
+#block2{
+width:100px;
+height:400px;
+position: absolute;
+bottom:0px;
+}
+
+
+
+.blocks{
+	border:3px solid green;
+	background: #c9de96; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2M5ZGU5NiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjU5JSIgc3RvcC1jb2xvcj0iIzhhYjY2YiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzOTgyMzUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(left,  #c9de96 0%, #8ab66b 59%, #398235 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,#c9de96), color-stop(59%,#8ab66b), color-stop(100%,#398235)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  #c9de96 0%,#8ab66b 59%,#398235 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  #c9de96 0%,#8ab66b 59%,#398235 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  #c9de96 0%,#8ab66b 59%,#398235 100%); /* IE10+ */
+background: linear-gradient(to right,  #c9de96 0%,#8ab66b 59%,#398235 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c9de96', endColorstr='#398235',GradientType=1 ); /* IE6-8 */
+
+}
+
+
+#block{
+	right:-100px;
+	position: absolute;
+	height: 500px;
+}
+
+#bird{
+	width:78px;
+	height:70px;
+	position: absolute;
+	background: url(ugkON8e.gif);
+	left:100px;
+	bottom:200px;
+	z-index: 99;
+}
+
+
+.explosion{
+	background: url(qgFD2h5.gif) !important;
+	background-size: 100%;
+	width:150px !important;
+	height: 120px !important;
+}
+
+
+#score{
+	background:silver;
+	width:100px;
+	height:100px;
+	font-size: 4em;
+	color:black;
+	text-align: center;
+	font-weight: bold;
+	float:left;
+}
+
+#score p{
+	margin:0px;
+}
+
+.tenpoints{
+	-webkit-animation: tenpoints 1s; 
+	animation: tenpoints 1s; 
+
+}
+
+#newgame{
+	display:none;
+}
+
+#ground{
+	background:#58694A;
+	position: absolute;
+	height: 10px;
+	bottom:0px;
+	width:100%;
+}
+
+.falling{
+	-webkit-animation: falling 0.9s; 
+	animation: falling 0.9s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	background: url(Y2oeZMJ.gif) !important;
+
+}
+
+.raising{
+	-webkit-animation: raising 0.5s; 
+	animation: raising 0.5s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+.exploded{
+	-webkit-animation: exploded 0.4s; 
+	animation: raising 0.4s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+
+
+
+@keyframes tenpoints
+{
+0%   {background: silver;}
+50% {transform: rotate(500deg) ;}
+100% {background: silver;}
+}
+
+@-webkit-keyframes tenpoints
+{
+0%   {background: white;}
+50% {-webkit-transform: rotate(500deg) ;}
+100% {background: silver;}
+}
+
+
+@keyframes falling
+{
+100% {transform: rotate(50deg) ;}
+}
+
+@-webkit-keyframes falling
+{
+100% {-webkit-transform: rotate(50deg) ;}
+}
+
+
+@keyframes raising
+{
+100% {transform: rotate(0deg) ;}
+}
+
+@-webkit-keyframes raising
+{
+100% {-webkit-transform: rotate(0deg) ;}
+}
+
+
+@keyframes exploded
+{
+100% {transform: rotate(10deg) ;}
+}
+
+@-webkit-keyframes exploded
+{
+0% {-webkit-transform: rotate(-2deg) ;}
+10% {-webkit-transform: rotate(2deg) ;}
+20% {-webkit-transform: rotate(-2deg) ;}
+30% {-webkit-transform: rotate(2deg) ;}
+40% {-webkit-transform: rotate(-2deg) ;}
+50% {-webkit-transform: rotate(2deg) ;}
+60% {-webkit-transform: rotate(-2deg) ;}
+70% {-webkit-transform: rotate(2deg) ;}
+80% {-webkit-transform: rotate(-2deg) ;}
+
+
+100% {-webkit-transform: rotate(0deg) ;}
+
+
+}
+
+#help{
+	color:white;
+	float:right;
+	width:120px;
+}
+
+</style></head><body>
+
+<div id="container">
+
+<div id="header">
+	<div id="score">
+		<p>0</p>
+		<button id="newgame" type="button">New Game</button>
+	</div>
+
+	<div id="help"><b>Flappy Bieber 1.0</b><br/>
+</div>
+
+
+<div id="game_container">
+	
+	<div id="bird"></div>
+	<div id="block">
+		<div class="blocks" id="block1"></div>
+		<div class="blocks" id="block2"></div>
+	</div>
+
+	<div id="ground"></div>
+
+</div>	
+</div>
+<script style='display: none;'>var __links = document.querySelectorAll('a');function __linkClick(e) { parent.window.postMessage(this.href, '*');} ;for (var i = 0, l = __links.length; i < l; i++) {if ( __links[i].getAttribute('target') == '_blank' ) { __links[i].addEventListener('click', __linkClick, false);}}</script>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+<script>
+
+var gwidth = $("#game_container").width();
+var block_height = 100;
+var block_width = 100;
+var starting = 1;
+var points = 0;
+var fallspeed = 150;
+var bheight_challenge = 0;
+$(function(){
+
+StartNewGame();
+
+setInterval(collisionControl, 50);
+//collisionControl();
+
+
+$("#newgame").click(function(){
+	StartNewGame();
+});
+
+$("#game_container").click(function(){
+gobirdgo();
+});
+
+
+});
+
+function StartNewGame(){
+	$("#game_container").removeClass("exploded");
+	startspeed=4000;
+	fall_startspeed = 1500;
+	starting=1;
+	points=0;
+	$("#bird").removeClass("explosion");
+	flydown();
+	startNewBlock();
+	$("#newgame").hide();
+}
+
+function collisionControl(){
+	block_pos = $("#block").position();
+	block1_height = $("#block1").height();
+	block2_pos = $("#block2").position();
+
+	bird_pos = $("#bird").position();
+	bird_width = $("#bird").width();
+	bird_height = $("#bird").height();
+
+
+	if( (bird_pos.top<block1_height || (bird_pos.top + bird_height ) > block2_pos.top  ) &&  ( block_pos.left<(bird_pos.left + bird_width)  && block_pos.left > bird_pos.left ) ){
+		gameover();
+	}
+
+
+
+
+}
+
+function gameover(){
+	$("#game_container").addClass("exploded");
+	$("#newgame").show();
+	$("#block").stop();
+	$("#bird").stop();
+	$("#bird").addClass("explosion");
+	$("#bird").removeClass("falling");
+
+}
+
+function flydown(){
+	$("#bird").addClass("falling");
+	$("#bird").removeClass("raising");
+	$("#bird").animate({bottom : '0'}, fallspeed, "linear");
+}
+
+
+function randomize(){
+var n=Math.floor(Math.random()*100);
+if(bheight_challenge>150){bheight_challenge = 150;}
+
+$("#block1").css("height", (block_height + n)) ;
+$("#block2").css("height", block_height - n + bheight_challenge);
+}
+
+function moveblock(){
+	speed = startspeed - (points * 100) ;
+	fallspeed = fall_startspeed - (points * 100);
+
+	if(fallspeed < 500){fallspeed = 500;}
+	if (speed < 1000){speed = 1000;}
+
+	$("#block").animate({right: '+500'} , speed, "linear", function(){
+		startNewBlock();
+
+	});
+}
+
+function startNewBlock(){
+	$("#block").css("right", - block_width);
+	if(starting){
+		starting = 0;
+	}else{
+		points++;
+		updatePoints();
+	}
+	bheight_challenge = bheight_challenge + 10;
+
+
+
+	randomize();
+	moveblock();
+}
+
+function updatePoints(){
+	if(points % 10 == 0){
+		$("#score").addClass("tenpoints");
+	}else{
+		$("#score").removeClass("tenpoints");
+	}
+
+	$("#score p").text(points);
+}
+
+function gobirdgo(){
+	bird_pos = $("#bird").position();
+if(bird_pos.top - 50 > 0){
+
+	$("#bird").removeClass("falling");
+	$("#bird").addClass("raising");
+	$("#bird").stop().animate({bottom : "+=50"}, 300, function(){
+		flydown();
+	});
+}
+}
+
+$(document).keyup(function(e){
+
+//Fly to the sky
+if (e.which == 32){
+
+gobirdgo();
+
+}
+
+});
+
+//@ sourceURL=pen.js
+</script>
+</body></html>

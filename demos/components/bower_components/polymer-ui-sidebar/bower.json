@@ -1,0 +1,11 @@
+{
+  "name": "polymer-ui-sidebar",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#0.2.3",
+    "polymer-ui-theme-aware": "Polymer/polymer-ui-theme-aware#0.2.3",
+    "polymer-flex-layout": "Polymer/polymer-flex-layout#0.2.3",
+    "polymer-ui-sidebar-header": "Polymer/polymer-ui-sidebar-header#0.2.3"
+  },
+  "version": "0.2.3"
+}

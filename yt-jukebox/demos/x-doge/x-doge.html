@@ -1,0 +1,18 @@
+
+<polymer-element name="x-doge" attributes="name">
+    <template>
+        <img class="pokemon" alt="{{name}}" src="http://img.pokemondb.net/artwork/{{name}}.jpg">
+    </template>
+    <script>
+        Polymer('x-doge', {
+            /**
+             * Name of the pokemon to display.
+             *
+             * @attribute name
+             * @type string
+             * @default ''
+             */
+            name: ''
+        });
+    </script>
+</polymer-element>

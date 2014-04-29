@@ -1,0 +1,243 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="music-visualizer" attributes="src">
+    <template>
+        <style>
+        canvas {
+            display: block;
+        }
+        audio {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+        }
+        #no-audio {
+            display: none;
+            box-sizing: border-box;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            height: 140px;
+            width: 260px;
+            margin: -70px 0 0 -130px;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: 1px solid #ff667f;
+            border-radius: 3px;
+            background: #ff3354;
+            color: #ffe5ea;
+            text-shadow: 0 -1px rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3), 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+        #no-audio h1 {
+            font-weight: normal;
+            font-size: 18px;
+            margin-top: 7px;
+        }
+        #no-audio p {
+            color: #ffccd4;
+        }
+        #no-audio a {
+            font-size: 11px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #fff;
+        }
+        </style>
+
+        <div id='no-audio'>
+            <h1>No Web Audio API</h1>
+            <p>Sorry, this experiment requires the Web Audio API.</p>
+            <a href='http://caniuse.com/#feat=audio-api' target='_blank'>See browser support</a>
+        </div>
+
+    </template>
+    <script>
+    window.requestAnimationFrame || (window.requestAnimationFrame =
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function(callback, element) {
+            return window.setTimeout(function() {
+                callback(+new Date());
+            }, 1000 / 60);
+        });
+
+    window.AudioContext = window.AudioContext ||
+        window.webkitAudioContext ||
+        window.mozAudioContext ||
+        window.msAudioContext ||
+        window.oAudioContext;
+
+
+    var canvas, ctx, W, H, bounds = {}, orbits = [],
+        audio, audioctx, jsNode, analyzer, sourceNode,
+        num_childs, total_circles = 20,
+        array, average,
+        rc = Math.round(Math.random() * 255),
+        audioprocess = false;
+
+    for (var i = 0; i < total_circles; i += 1) {
+        orbits.push(new Orbit(i));
+    }
+
+    function Orbit(index) {
+        this.index = index || 1;
+        this.num_childs = num_childs || 1;
+        this.radius = 0;
+        this.speed = 0.5;
+    }
+
+    var getAverageVolume = function(array) {
+        var values = 0,
+            length = array.length;
+        for (var i = 0; i < length; i += 1) {
+            values += array[i];
+        }
+        return values / length;
+    };
+
+    var draw = function(preview) {
+
+        if (preview === true) {
+            average = Math.floor(Math.random() * (200 - 10 + 1)) + 10;
+        }
+
+        if (AudioContext) {
+            if (audioprocess) {
+                array = new Uint8Array(analyzer.frequencyBinCount);
+                analyzer.getByteFrequencyData(array);
+                average = getAverageVolume(array);
+            }
+        } else {
+            average = Math.floor(Math.random() * (200 - 10 + 1)) + 10;
+            requestAnimationFrame(draw);
+        }
+        render();
+    };
+
+    var render = function() {
+        ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.globalCompositeOperation = "source-over";
+
+        ctx.globalAlpha = average < 100 ? 0 + (average - 0) * (1 - 0) / (100 - 0) : 1;
+
+        for (var i = 0; i < orbits.length; i++) {
+            var orbit = orbits[i];
+            orbit.index += (average / 500);
+            orbit.num_childs = ~~ ((orbit.index) * 5);
+            orbit.radius = ((orbit.num_childs + 10) * orbit.index);
+
+            for (var j = 0; j < orbit.num_childs; j += 1) {
+                var angle = j * (Math.PI * 2) / orbit.num_childs,
+                    x = W / 2 + Math.cos(angle) * orbit.radius,
+                    y = H / 2 + Math.sin(angle) * orbit.radius,
+                    x2, y2, angle2, x3, y3;
+
+                if (average)
+                    rc = Math.round(Math.random() * 255);
+
+                ctx.beginPath();
+                ctx.fillStyle = 'rgba(0, 0, 0, 0)';
+                ctx.arc(x, y, 1, Math.PI * 2, false);
+                ctx.fill();
+                ctx.closePath();
+
+                x2 = W / 2 + (Math.cos(angle + 10) * orbit.radius);
+                y2 = H / 2 + (Math.sin(angle + 10) * orbit.radius);
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x2, y2);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = (average > 100) ? 'rgba(' + rc + ',0,0,0.2)' : 'rgba(' + rc + ',0,255,0.2)';
+                ctx.stroke();
+                ctx.closePath();
+
+                angle2 = (j + 1) * (2 * Math.PI) / orbit.num_childs;
+                x3 = W / 2 + Math.cos(angle2) * orbit.radius;
+                y3 = H / 2 + Math.sin(angle2) * orbit.radius;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x3, y3);
+                ctx.lineWidth = 1;
+                ctx.lineCap = "round";
+                ctx.strokeStyle = (average > 100) ? 'rgba(214,223,88,0.2)' : 'rgb(0,255,255)';
+                ctx.stroke();
+                ctx.closePath();
+            }
+
+            if ((orbit.radius > W) && (orbit.radius > H))
+                orbit.index = 0;
+        }
+    };
+
+    var resize = function() {
+        W = ctx.canvas.width = window.innerWidth;
+        H = ctx.canvas.height = window.innerHeight;
+    };
+
+    Polymer('music-visualizer', {
+        src: '',
+        ready: function() {
+            canvas = document.createElement('canvas');
+            document.body.appendChild(canvas);
+            canvas.style.display = "block";
+            document.body.style.height = "100%";
+            ctx = canvas.getContext('2d');
+            window.addEventListener('resize', resize, false);
+            resize();
+            draw(true);
+
+            if (AudioContext) {
+                audio = new Audio();
+                audio.controls = true;
+                audio.src = this.src;
+                document.body.appendChild(audio);
+
+                audioctx = new AudioContext();
+                analyzer = audioctx.createAnalyser();
+                analyzer.smoothingTimeConstant = 0.5;
+                analyzer.fftSize = 512;
+                jsNode = audioctx.createJavaScriptNode(2048, 1, 1);
+
+                audio.addEventListener('canplay', function() {
+                    console.log("canplay");
+                    audio.play();
+                    sourceNode = audioctx.createMediaElementSource(audio);
+                    sourceNode.connect(analyzer);
+                    analyzer.connect(jsNode);
+                    jsNode.connect(audioctx.destination);
+                    sourceNode.connect(audioctx.destination);
+                    jsNode.onaudioprocess = function() {
+                        audioprocess = true;
+                        draw();
+                    };
+                });
+
+            } else {
+                window.WebFontConfig = {
+                    google: {
+                        families: ['Inconsolata::latin']
+                    }
+                };
+
+                (function() {
+                    var wf = document.createElement('script');
+                    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+                        '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+                    wf.type = 'text/javascript';
+                    wf.async = 'true';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(wf, s);
+                })();
+
+                document.getElementById('no-audio').style.display = "block";
+
+                draw();
+            }
+        }
+    });
+    </script>
+</polymer-element>

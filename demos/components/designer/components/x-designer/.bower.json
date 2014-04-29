@@ -1,0 +1,22 @@
+{
+  "name": "x-designer",
+  "private": true,
+  "dependencies": {
+    "polymer-layout": "Polymer/polymer-layout#master",
+    "polymer-flex-layout": "Polymer/polymer-flex-layout#master",
+    "polymer-ui-splitter": "Polymer/polymer-ui-splitter#master",
+    "x-designable": "Polymer/x-designable#master",
+    "x-palette": "Polymer/x-palette#master",
+    "x-tree": "Polymer/x-tree#master"
+  },
+  "homepage": "https://github.com/Polymer/x-designer",
+  "_release": "3e49612b9b",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "3e49612b9b04fa55ff84306292b9b93d94a1f531"
+  },
+  "_source": "git://github.com/Polymer/x-designer.git",
+  "_target": "master",
+  "_originalSource": "Polymer/x-designer"
+}

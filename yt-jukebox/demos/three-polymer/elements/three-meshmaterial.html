@@ -1,0 +1,35 @@
+<polymer-element name="three-meshmaterial" attributes="color wireframe wireframeLinewidth wireframeLinecap wireframeLinejoin shading vertexColors fog type texture" extends="three-material">
+    <script>      
+        Polymer("three-meshmaterial", {
+            ready: function() {
+                var binders = {
+                    basic: ["wireframe", "wireframeLinewidth", "wireframeLinecap", "wireframeLinejoin", "shading", "vertexColors", "fog"],
+                    lambert: []
+                };
+                
+                switch(this.type) {
+                    case "lambert":
+                        this.three = new THREE.MeshLambertMaterial();
+                        binders["lambert"].forEach(POLYTHREE.bindAttrib.bind(this, this, this.three));
+                        
+                        break;
+                    case "basic":
+                    default:
+                        this.three = new THREE.MeshBasicMaterial();
+                        binders["basic"].forEach(POLYTHREE.bindAttrib.bind(this, this, this.three));
+                        
+                }
+                this.super();
+            },
+            getTexture: function() {
+                setTimeout(function() {
+                    this.three.map = document.getElementById(this.texture).three;
+                    this.three.needsUpdate = true;
+                }.bind(this), 0);
+            },
+            colorChanged: function() {
+                this.three.color.set(POLYTHREE.convert(1, this.color));   
+            }
+        });
+    </script>
+</polymer-element>

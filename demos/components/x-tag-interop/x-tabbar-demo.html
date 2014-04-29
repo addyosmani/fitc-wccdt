@@ -1,0 +1,46 @@
+﻿<!doctype html>
+<html>
+<head>
+  <title></title>
+  <script src="../platform/platform.js"></script>
+  <link rel="import" href="x-iconbutton.html">
+  <link rel="import" href="x-tabbar.html">
+  <style>
+    x-tabbar{
+      height: 15%;
+    }
+    x-tabbar x-iconbutton[active] {
+      color: white;
+      background: blue;
+    }
+    x-tabbar x-iconbutton .x-iconbutton-icon {
+      max-width: 30px;
+      max-height: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  <article>
+    <header><h1>x-tabbar demo</h1></header>
+    <figure class="demo">
+      <x-tabbar>
+        <x-tabbar-tab>
+          <x-iconbutton icon-anchor="top">One</x-iconbutton>
+        </x-tabbar-tab>
+        <x-tabbar-tab>
+          <x-iconbutton icon-anchor="top">Two</x-iconbutton>
+        </x-tabbar-tab>
+        <x-tabbar-tab>
+          <x-iconbutton icon-anchor="top">Three</x-iconbutton>
+        </x-tabbar-tab>
+        <x-tabbar-tab>
+          <x-iconbutton icon-anchor="top">Four</x-iconbutton>
+        </x-tabbar-tab>
+        <x-tabbar-tab>
+          <x-iconbutton icon-anchor="top">Five</x-iconbutton>
+        </x-tabbar-tab>
+      </x-tabbar>
+    </figure>
+  </article>
+</body>
+</html>

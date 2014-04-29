@@ -1,0 +1,77 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-ui-icon/polymer-ui-icon.html">
+<link rel="import" href="../bower_components/polymer-ui-icon-button/polymer-ui-icon-button.html">
+<link rel="import" href="poly-drop.html">
+<link rel="import" href="../bower_components/google-signin/google-signin.html">
+<!--
+* Copyright (c) 2014 Google Inc. All rights reserved.
+* This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE
+*
+* A Polymer element that encapsulates the Drive API app and provides layout and UI for it.
+*
+* @author: Addy Osmani
+*
+-->
+
+<polymer-element name="poly-app">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            * {
+                font-family: 'Open Sans', 'Arial';
+            }
+
+            #site-banner {
+                top: 0;
+                right: 0;
+                background-color: rgb(31, 32, 54);
+                display: flex;
+                align-items: flex-end;
+                position: fixed;
+                z-index: 1;
+                height: 100px;
+                width: 100%;
+                color: rgb(255, 255, 255);
+                padding-left: 64px;
+                transition: background-color 300ms ease-in;
+            }
+
+            poly-drop {
+                margin-top: 70px;
+                position: relative;
+                display: block;
+                background: white;
+            }
+
+            #app-bar {
+                top: 0;
+                right: 0;
+                position: fixed;
+                width: 100%;
+                padding-left: 10px;
+                font-size: 1.5em;
+            }
+        </style>
+
+        <polymer-ui-toolbar id="app-bar" theme="polymer-ui-dark-theme">
+            <polymer-ui-icon src="icon.png"></polymer-ui-icon>
+            <div flex>Polydrops</div>
+            <google-signin clientId="400542164111-q94vcbin3jp3fb2a0su1nm6gt4qpf86t.apps.googleusercontent.com" scopes="profile"></google-signin>
+            <polymer-ui-icon-button icon="trash" alt="Clear upload list"
+                                    on-click="{{clearUploadList}}"></polymer-ui-icon-button>
+        </polymer-ui-toolbar>
+        <poly-drop></poly-drop>
+
+    </template>
+    <script>
+
+        Polymer('poly-app', {
+            clearUploadList: function () {
+                this.fire('clear-upload-list');
+            }
+        });
+    </script>
+</polymer-element>

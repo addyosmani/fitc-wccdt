@@ -1,0 +1,129 @@
+<!--
+Copyright 2013 The Polymer Authors. All rights reserved.
+Use of this source code is governed by a BSD-style
+license that can be found in the LICENSE file.
+-->
+
+<!--
+/**
+ * @module Polymer UI Elements
+ */
+-->
+
+<!--
+/**
+ * polymer-ui-ratings allows users to rate items.
+ *
+ * Example:
+ *
+ *     <polymer-ui-ratings value="3"></polymer-ui-ratings>
+ *
+ * By default polymer-ui-ratings shows 5 stars but can be configured using 
+ * "count" attribute:
+ *
+ *     <polymer-ui-ratings value="3" count="10"></polymer-ui-ratings>
+ *
+ * @class polymer-ui-ratings
+ */
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-ui-theme-aware/polymer-ui-theme-aware.html">
+
+<polymer-element name="polymer-ui-ratings" extends="polymer-ui-theme-aware" attributes="count value autofocus">
+  <template>
+    <link rel="stylesheet" href="polymer-ui-ratings.css">
+    <span id="container" tabindex="0" on-keydown="{{keydownAction}}" role="slider">
+      <template repeat="{{star in stars}}">
+        <span id="star" index="{{star.index}}" class="{{star.starClass}}" on-tap="{{updateValue}}"></span>
+      </template>
+    </span>
+  </template>
+  <script>
+    Polymer('polymer-ui-ratings', {
+      /**
+       * Whether to focus this element on document load.
+       *
+       */
+      autofocus: false,
+      /**
+       * Number of stars to display.
+       *
+       * @attribute count
+       * @type number
+       * @default 5
+       */
+      count: 5,
+      /**
+       * Number of selected stars.
+       *
+       * @attribute value
+       * @type number
+       * @default 0
+       */
+      value: 0,
+      ready: function() {
+        this.$.container.setAttribute('aria-valuemin', 0);
+        this.countChanged();
+        if (this.autofocus)
+          this.$.container.focus();
+      },
+      countChanged: function() {
+        this.stars = [];
+        for (var i = 0; i < this.count; i++) {
+          this.stars.push({index: i});
+        }
+        this.$.container.setAttribute('aria-valuemax', this.count);
+        this.valueChanged();
+      },
+      valueChanged: function() {
+        this.stars && this.stars.forEach(function(s, i) {
+          s.starClass = i < this.value ? 'full' : '';
+        }.bind(this));
+        this.$.container.setAttribute('aria-valuenow', this.value);
+        this.$.container.setAttribute(
+            'aria-valuetext',
+             this.value + (this.value == 1 ? ' star' : ' stars'));
+      },
+      updateValue: function(event, detail, sender) {
+        var s = sender.templateInstance.model.star;
+        this.value = s.index + (s.starClass ? 0 : 1);
+      },
+      incrementValue: function() {
+        if (this.value < this.count)
+          this.value++;
+      },
+      decrementValue: function() {
+        if (this.value > 0)
+          this.value--;
+      },
+      keydownAction: function(event, detail, sender) {
+        var END_KEY = 35;
+        var HOME_KEY = 36;
+        var LEFT_KEY = 37;
+        var UP_KEY = 38;
+        var RIGHT_KEY = 39;
+        var DOWN_KEY = 40;
+        if (event.keyCode === END_KEY) {
+          this.value = this.count;
+          event.preventDefault();
+          return;
+        }
+        if (event.keyCode === HOME_KEY) {
+          this.value = 0;
+          event.preventDefault();
+          return;
+        }
+        if (event.keyCode === RIGHT_KEY || event.keyCode === UP_KEY) {
+          this.incrementValue();
+          event.preventDefault();
+          return;
+        }
+        if (event.keyCode === LEFT_KEY || event.keyCode === DOWN_KEY) {
+          this.decrementValue();
+          event.preventDefault();
+          return;
+        }
+      }
+    });
+  </script>
+</polymer-element>

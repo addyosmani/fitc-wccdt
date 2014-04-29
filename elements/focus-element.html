@@ -1,0 +1,12 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<polymer-element name="focus-element">
+  <template>
+    <button on-click="{{setFocus}}" style="line-height:16px;">Set Focus</button>
+    <input id="nameInput" type="text">
+  </template>
+  <script>
+  Polymer('focus-element', {
+    setFocus: function() { this.$.nameInput.focus(); }
+  });
+  </script>
+</polymer-element>

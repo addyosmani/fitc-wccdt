@@ -1,0 +1,13 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<polymer-element name="click-element">
+  <template>
+    <button on-click="{{setMessage}}" style="line-height:16px;">Click me</button>
+    <span>{{message}}</span>
+  </template>
+  <script>
+  Polymer('click-element', {
+    message: 'Waiting to be clicked...',
+    setMessage: function() { this.message = 'I was clicked!' }
+  });
+  </script>
+</polymer-element>

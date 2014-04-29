@@ -1,0 +1,27 @@
+{
+  "name": "components",
+  "version": "0.0.0",
+  "homepage": "https://github.com/addyosmani/ctw",
+  "authors": [
+    "Addy Osmani <addyosmani@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "polymer-elements": "Polymer/polymer-elements#~0.2.2",
+    "polymer-ui-elements": "Polymer/polymer-ui-elements#~0.2.2",
+    "polymer-jsonp": "Polymer/polymer-jsonp#~0.1.4",
+    "polymer-ui-base-css": "PolymerLabs/polymer-ui-base#~0.2.3",
+    "polymer-ui-tabs": "PolymerLabs/polymer-ui-tabs#~0.2.3",
+    "polymer-selection": "PolymerLabs/polymer-selection#~0.2.3",
+    "polymer-selector": "PolymerLabs/polymer-selector#~0.2.3",
+    "videojs": "~4.5.2",
+    "yt-video": "PolymerLabs/yt-video#~0.2.3",
+    "yt-search": "PolymerLabs/yt-search#~0.2.3"
+  },
+  "resolutions": {
+    "polymer-selection": "~0.2.3",
+    "polymer-selector": "~0.2.3",
+    "polymer-jsonp": "0.2.3"
+  }
+}

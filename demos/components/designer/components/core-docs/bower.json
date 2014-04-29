@@ -1,0 +1,7 @@
+{
+  "name": "core-docs",
+  "private": true,
+  "dependencies": {
+    "core-component-page": "Polymer/core-component-page#master"
+  }
+}

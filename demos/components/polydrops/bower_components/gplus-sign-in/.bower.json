@@ -1,0 +1,16 @@
+{
+  "name": "google-signin",
+  "version": "0.0.2",
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  },
+  "_release": "0.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.2",
+    "commit": "bad4af34c634b0d2193fa3f97b5c6082be83348b"
+  },
+  "_source": "/Users/addyo/projects/gplus-sign-in",
+  "_target": "*",
+  "_originalSource": "../gplus-sign-in"
+}

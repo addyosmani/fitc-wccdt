@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <title>x-palette</title>
+  <script src="../platform/platform.js"></script>
+  <link rel="import" href="../x-palette/x-palette.html">
+  <style>
+    html {
+      position: relative;
+      height: 100%;
+    }
+    body {
+      font-family: Neue Helvetica, Roboto, Arial;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+    x-palette {
+      display: block;
+      overflow: hidden;
+      position: absolute !important;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  </style>
+  <link rel="import" href="../polymer-ui-elements/metadata.html">
+</head>
+<body>
+  <x-palette></x-palette>
+  <template>
+    <link rel="import" href="../polymer-elements/metadata.html">
+    <link rel="import" href="../more-elements/metadata.html">
+  </template>
+  <script>
+    setTimeout(function() {
+      var doc = document.querySelector('template').content;
+      HTMLImports.importer.load(doc, function() {
+        doc.querySelectorAll('link').array().forEach(
+          function(link) {
+            HTMLImports.parser.parse(link.content);
+            CustomElements.parser.parse(link.content);
+          }
+        );
+      });
+    }, 2000);
+  </script>
+</body>
+</html>

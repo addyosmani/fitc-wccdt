@@ -1,0 +1,29 @@
+<polymer-element name="three-camera" attributes="near far angle aspect lookAt" constructor="ThreeCamera" extends="three-object3d">
+    <script>
+        Polymer("three-camera", {
+            near: 0.1,
+            far: 10000,
+            angle: 45,
+            aspect:0, 
+            ready: function() {
+                if(this.aspect == 0) {
+                    this.aspect = this.parentElement.clientWidth / this.parentElement.clientHeight;
+                }
+                this.three = new THREE.PerspectiveCamera(this.angle, this.aspect, this.near, this.far);
+                this.super();
+                
+                var self = this;
+                setTimeout(function() {
+                    self.lookAt && (self._lookAt());
+                }, 0);
+            },
+            _lookAt: function() {
+                var target = document.getElementById(this.lookAt);
+
+                if(target && target.three) {
+                    this.three.lookAt(target.three.position);
+                }
+            }
+        });
+    </script>
+</polymer-element>

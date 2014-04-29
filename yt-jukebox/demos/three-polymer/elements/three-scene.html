@@ -1,0 +1,51 @@
+<script src="vendor/three.js"></script>   
+<script src="utils.js"></script>
+
+<link rel="import" href="three-object3d.html"/> 
+<link rel="import" href="three-material.html"/> 
+<link rel="import" href="three-mesh.html"/> 
+<link rel="import" href="three-camera.html"/> 
+<link rel="import" href="three-geometry.html"/> 
+<link rel="import" href="three-meshmaterial.html"/> 
+
+<polymer-element name="three-scene" attributes="width height" extends="three-object3d" lightdom>
+    <template>
+        <style>
+            @host { display: block; }
+        </style>
+    </template>
+
+    <script>
+        Polymer("three-scene", {
+            created: function() {
+                this.three = new THREE.Scene();
+                this.super();
+            },
+            ready: function() {
+                this.super();
+                this.renderer = new THREE.WebGLRenderer();
+                this.renderer.setSize(this.clientWidth, this.clientHeight); 
+                this.appendChild(this.renderer.domElement);                
+                this.camera = this.querySelector("three-camera");
+                
+                this._lastRender = (new Date()).getTime();
+                this.render();
+            },
+            render: function() {
+                var newTime = (new Date()).getTime(),
+                    delta = newTime - this._lastRender;
+                
+                for(var i = 0; i < this.children.length; i++) {
+                    if(this.children[i].tick) {
+                        this.children[i].tick(delta);
+                    }
+                };
+                
+                this.renderer.render(this.three, this.camera.three);
+                
+                this._lastRender = newTime;
+                requestAnimationFrame(this.render.bind(this));
+            }
+        });
+    </script>
+</polymer-element>

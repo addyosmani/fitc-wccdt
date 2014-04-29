@@ -1,0 +1,17 @@
+{
+  "name": "smoothie-chart",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  },
+  "homepage": "https://github.com/Polymer/smoothie-chart",
+  "_release": "2ec4e215f0",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "2ec4e215f0c317cb9b7ec3fbe1c86df3f56952d9"
+  },
+  "_source": "git://github.com/Polymer/smoothie-chart.git",
+  "_target": "master",
+  "_originalSource": "Polymer/smoothie-chart"
+}

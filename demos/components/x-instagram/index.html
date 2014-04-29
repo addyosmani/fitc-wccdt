@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>&lt;insta-gram&gt;</title>
+
+    <!-- Importing Web Component's Polyfill -->
+    <script src="app/bower_components/platform/platform.js"></script>
+
+    <!-- Importing Custom Elements -->
+    <link rel="import" href="src/x-instagram.html">
+    <style>
+        body {
+          font-family: Helvetica, Arial;
+          background-color: #eee;
+          color: #666;
+        }
+
+        h1 {
+            color: black;
+        }
+
+        #page-header {
+            position: fixed;
+            background: #4285f4;
+            width: 100%;
+            height: 60px;
+            color: white;
+            margin-top: -20px;
+            line-height: 50px;
+            margin-left: -8px;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="page-header">&lt;insta-gram&gt;</h1>
+    <h2>A Polymer element for querying the Instagram API</h2>
+    <!-- Using Custom Elements -->
+
+    <h3>Usage</h3>
+    <pre>
+        &lt;insta-gram tag="javascript" count="10"&gt;&lt;/insta-gram&gt;
+    </pre>
+
+    <x-instagram tag="smashingconf"></x-instagram>
+<!--
+    <x-instagram tag="selfie"></x-instagram>
+
+    <x-instagram tag="yolo" photosPerRow="7" count="14"></x-instagram>
+-->
+</body>
+</html>

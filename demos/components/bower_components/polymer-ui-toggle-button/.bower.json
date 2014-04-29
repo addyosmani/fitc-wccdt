@@ -1,0 +1,18 @@
+{
+  "name": "polymer-ui-toggle-button",
+  "private": true,
+  "dependencies": {
+    "polymer-flex-layout": "Polymer/polymer-flex-layout#0.2.3"
+  },
+  "version": "0.2.3",
+  "homepage": "https://github.com/Polymer/polymer-ui-toggle-button",
+  "_release": "0.2.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.3",
+    "commit": "3e9e9dc14658589a6d7a29a877ee66db3300489d"
+  },
+  "_source": "git://github.com/Polymer/polymer-ui-toggle-button.git",
+  "_target": "0.2.3",
+  "_originalSource": "Polymer/polymer-ui-toggle-button"
+}

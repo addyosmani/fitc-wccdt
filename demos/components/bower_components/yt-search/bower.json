@@ -1,0 +1,26 @@
+{
+  "name": "yt-search",
+  "homepage": "https://github.com/Polymer/yt-search",
+  "authors": [
+    "The Polymer Authors"
+  ],
+  "description": "A youtube search element",
+  "main": "yt-search.html",
+  "keywords": [
+    "polymer"
+  ],
+  "license": "BSD",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#0.2.3",
+    "polymer-ajax": "Polymer/polymer-ajax#0.2.3"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "0.2.3"
+}

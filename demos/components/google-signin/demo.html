@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+
+  <title>google-signin Demo</title>
+
+  <script src="bower_components/platform/platform.js"></script>
+  <link rel="import" href="google-signin.html">
+
+</head>
+<body unresolved>
+
+  <p>A `&lt;google-signin&gt;` demo:</p>
+  <div id="status"></div>
+
+  <google-signin clientId="400542164111-q94vcbin3jp3fb2a0su1nm6gt4qpf86t.apps.googleusercontent.com" scopes="https://www.googleapis.com/auth/drive"></google-signin>
+
+  <script>
+      document.addEventListener("google-signin-success", function(){
+        document.querySelector("#status").innerHTML = "You are now signed in.";
+      });
+  </script>
+
+</body>
+</html>

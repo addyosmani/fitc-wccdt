@@ -1,0 +1,17 @@
+{
+  "name": "core-range",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  },
+  "homepage": "https://github.com/Polymer/core-range",
+  "_release": "dac5dab2c2",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "dac5dab2c224615f72972f5b4ede0b59ab374964"
+  },
+  "_source": "git://github.com/Polymer/core-range.git",
+  "_target": "master",
+  "_originalSource": "Polymer/core-range"
+}

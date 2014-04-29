@@ -1,0 +1,17 @@
+{
+  "name": "pdf-js",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  },
+  "homepage": "https://github.com/Polymer/pdf-js",
+  "_release": "568dd42591",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "568dd4259101f2fee7ec84027884034e733223c2"
+  },
+  "_source": "git://github.com/Polymer/pdf-js.git",
+  "_target": "master",
+  "_originalSource": "Polymer/pdf-js"
+}

@@ -1,0 +1,42 @@
+:host {
+  position: relative;
+}
+
+#list {
+  background-color: #F2F2F2;
+  position: absolute;
+  top: 0;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  padding: 0 10px;
+  overflow-y: auto;
+  font-size: 15px;
+  opacity: 0.9;
+  -webkit-overflow-scrolling: touch;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.group-item {
+  font-weight: 500;
+}
+
+.group-item.palette-selected {
+  color: #4285f4;
+}
+
+.simple-item {
+  height: 40px;
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #000;
+  white-space: nowrap;
+}
+
+[ishidden] {
+  display: none;
+}

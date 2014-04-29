@@ -1,0 +1,45 @@
+{
+  "name": "polymer-ui-carousel",
+  "version": "0.0.1",
+  "authors": [
+    "Addy Osmani <addyosmani@gmail.com>"
+  ],
+  "description": "A Polymer carousel element",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "carousel",
+    "slider"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "polymer-ui-animated-pages": "Polymer/polymer-ui-animated-pages#master",
+    "polymer-flex-layout": "Polymer/polymer-flex-layout#master",
+    "polymer-animation": "Polymer/polymer-animation#master",
+    "polymer-ui-base-css": "Polymer/polymer-ui-base#~0.2.0",
+    "polymer-ui-toolbar": "Polymer/polymer-ui-toolbar#~0.2.0",
+    "platform": "Polymer/platform#~0.2.0",
+    "prismjs": "*"
+  },
+  "resolutions": {
+    "polymer": "master",
+    "platform": "master",
+    "polymer-flex-layout": "master",
+    "core-component-page": "0.2.3",
+    "core-action-icons": "0.2.3",
+    "polymer-animation": "0.2.3",
+    "polymer-ui-base": "0.2.3",
+    "polymer-ui-pages": "0.2.3",
+    "polymer-selector": "0.2.3",
+    "polymer-selection": "0.2.3"
+  }
+}

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>&lt;prism-js&gt;</title>
+
+    <!-- Importing Web Component's Polyfill -->
+    <script src="components/platform/platform.js"></script>
+
+    <!-- Importing Custom Elements -->
+    <link rel="import" href="prism-js.html">
+
+    <!-- Import Prism theme -->
+    <link rel="stylesheet" href="components/prismjs/prism-okaidia.css">
+</head>
+<body>
+
+<h1><a href="http://github.com/addyosmani/prism-js">&lt;prism-js&gt;</a></h1>
+<h2>A <a href="http://polymer-project.org">Polymer</a> element for syntax highlighting with <a href="http://prismjs.com">Prism.js</a></h2>
+
+<h2>Usage</h2>
+
+<h3>Specify language &amp; include code inline</h3>
+
+<prism-js language="markup">
+&lt;prism-js language="css"&gt;
+p { color: blue; }
+&lt;/prism-js&gt;
+</prism-js>
+
+<h3>Include line-numbers</h3>
+
+<h4>&lt;prism-js language="javascript" linenumbers="true"&gt;</h4>
+<prism-js language="javascript" linenumbers="true">
+if (true) {
+    console.log('foo');
+}
+</prism-js>
+
+<h3>Auto-escape HTML for you</h3>
+
+<h4>&lt;prism-js language="markup" escape="true"&gt;</h4>
+<prism-js language="markup" escape="true">
+<prism-js language="markup" escape="true">
+    <p>Some paragraph text</p>
+    <p data-foo="bar"></p>
+    <style>
+     p { color: red; }
+    </style>
+</prism-js>
+</prism-js>
+
+<h3>Attributes without value</h3>
+<h4>&lt;prism-js language="markup"&gt;</h4>
+<prism-js language="markup">
+&lt;p data-foo&gt;&lt;/p&gt;
+&lt;p data-foo &gt;&lt;/p&gt;
+</prism-js>
+
+<h3>Name attribute pair</h3>
+<h4>&lt;prism-js language="markup"&gt;</h4>
+<prism-js language="markup">
+&lt;p class=prism&gt;&lt;/p&gt;
+</prism-js>
+
+<h3>Namespaces</h3>
+<h4>&lt;prism-js language="markup"&gt;</h4>
+<prism-js language="markup">
+&lt;html:p foo:bar=&quot;baz&quot; foo:weee&gt;&lt;/html:p&gt;
+</prism-js>
+
+<h3>Tag that spans multiple lines</h3>
+<h4>&lt;prism-js language="markup"&gt;</h4>
+<prism-js language="markup">
+&lt;p
+&gt;hello!
+&lt;/p&gt;
+</prism-js>
+
+<h3>Embedded JS and CSS</h3>
+<h4>&lt;prism-js language="markup"&gt;</h4>
+<prism-js language="markup">
+    &lt;!DOCTYPE html&gt;
+    &lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;title&gt;I can haz embedded CSS and JS&lt;/title&gt;
+        &lt;style&gt;
+            @media print {
+                p { color: red !important; }
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;I can haz embedded CSS and JS&lt;/h1&gt;
+        &lt;script&gt;
+        if (true) {
+            console.log('foo');
+        }
+        &lt;/script&gt;
+    
+    &lt;/body&gt;
+    &lt;/html&gt;
+</prism-js>
+
+<h3>LESS variables</h3>
+<h4>&lt;prism-js language="css"&gt;</h4>
+<prism-js language="css">
+@main-color: red;
+.foo {
+  background: @main-color;
+}
+</prism-js>
+
+
+<h3>Nested strings</h3>
+<h4>&lt;prism-js language="javascript"&gt;</h4>
+<prism-js language="javascript">
+var foo = &quot;foo&quot;, bar = &quot;He &quot;said&quot; 'hi'!&quot;
+</prism-js>
+
+
+</body>
+</html>

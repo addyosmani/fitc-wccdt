@@ -1,0 +1,7 @@
+{
+  "name": "x-tree",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  }
+}

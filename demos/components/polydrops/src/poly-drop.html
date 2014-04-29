@@ -1,0 +1,242 @@
+<!-- Import elements -->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-ui-toggle-button/polymer-ui-toggle-button.html">
+<link rel="import" href="../bower_components/polymer-ui-toolbar/polymer-ui-toolbar.html">
+<link rel="import" href="../bower_components/polymer-flex-layout/polymer-flex-layout.html">
+<link rel="import" href="../bower_components/polymer-flex-layout/polymer-flex-panel.html">
+<link rel="import" href="../bower_components/polymer-ui-splitter/polymer-ui-splitter.html">
+
+<!--
+* Copyright (c) 2014 Google Inc. All rights reserved.
+* This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE
+*
+* A Polymer element for handling uploads to the Google Drive API. Note that this work is heavily
+* being refactored and will be broken down into further, reusable elements shortly.
+*
+* @author: Addy Osmani
+*
+-->
+
+<polymer-element name="poly-drop">
+    <script src="upload.js"></script>
+    <template>
+    <style shim-shadowdom>
+        #dropzone {
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            padding: 90px 10px;
+            text-align: center;
+            font: 20pt bold 'Helvetica';
+            color: #bbb;
+            background: white;
+        }
+
+        #files {
+            display: block;
+            margin: 0 auto;;
+        }
+
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: 'or click to select files';
+            background: white;
+            padding: 5px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            font-size: 16pt;
+            margin: 0 auto;
+        }
+
+        .custom-file-input:hover::before {
+            border-color: black;
+        }
+
+        .custom-file-input:active::before {
+            background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+        }
+
+        .filelist {
+            padding-left: 0px;
+            list-style-type: none;
+        }
+
+        .filelist li {
+            background: #F5F5F5;
+            padding: 10px 10px;
+            border: 1px solid #ccc
+        }
+
+        polymer-ui-toolbar > div {
+            margin: 5px;
+        }
+
+        #upload-view {
+            display: none;
+            right: 0;
+        }
+
+        #dropzone-bar {
+            right: 0;
+            position: relative;
+        }
+
+        polymer-ui-toolbar {
+            font-size: 1em;
+        }
+
+        polymer-ui-splitter {
+            height: 500px;
+        }
+
+        .container {
+            width: 400px;
+            height: 500px;
+        }
+
+
+        #file-splitter {
+            width: 100%;
+            overflow: visible;
+        }
+
+        @media (max-width: 500px) {
+            .box1, .box2 { width: 100% }
+            #file-splitter polymer-ui-splitter { display:none; }
+        }
+    </style>
+        <div id="uploadview" style="display:none;">
+
+            <div id="dropzone" on-tap="{{tapSelect}}" on-dragover="{{handleDragOver}}" on-drop="{{handleFileSelect}}">
+                Drag files to upload to Google Drive <img src="drive.png" width="32px"> 
+                <input tabindex="0" type="file" id="files" class="custom-file-input" name="files[]" multiple on-change="{{handleFilePick}}"/>
+            </div>
+
+            <polymer-ui-toolbar id="dropzone-bar">
+                <div>Auto-upload:
+                    <polymer-ui-toggle-button class="wide-button" onCaption="On" offCaption="Off"
+                                              value="{{autoUpload}}"></polymer-ui-toggle-button>
+                </div>
+                <div>
+                    <button on-click="{{manualUpload}}" style="display:{{ autoUpload ? 'none' : 'block' }}">Upload
+                        files
+                    </button>
+                </div>
+                <div flex></div>
+                <div>
+                    <div id="status">Ready.</div>
+                </div>
+            </polymer-ui-toolbar>
+
+        <div id="file-splitter" flex>
+            <polymer-flex-layout></polymer-flex-layout>
+                  <div class="box1" style="width:50%">
+                    <polymer-ui-toolbar theme="polymer-ui-dark-theme">
+                        <div flex>Queue</div>
+                    </polymer-ui-toolbar>
+                    <ul class="filelist">
+                        <template repeat="{{file in uploadList}}">
+                            <li><strong>{{file.name}}</strong> ({{file.type}})</li>
+                        </template>
+                    </ul>
+                </div>
+                  <polymer-ui-splitter direction="left"></polymer-ui-splitter>
+                <div class="box2" style="width:50%">
+                    <polymer-ui-toolbar theme="polymer-ui-dark-theme">
+                        <div flex>Uploaded</div>
+                    </polymer-ui-toolbar>
+                    <ul class="filelist">
+                        <template repeat="{{uploadedList}}">
+                            <li><img src="{{iconLink}}"/> <strong>{{title}}</strong> <a href="{{selfLink}}">Link to
+                                file</a>, <a href="{{webContentLink}}">Link to web content</a>, <a
+                                    href="{{thumbnailLink}}">Thumbnail</a></li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </template>
+    <script>
+        Polymer('poly-drop', {
+            uploadList: [],
+            uploadedList: [],
+            autoUpload: true,
+            ready: function () {
+                document.addEventListener('google-signin-success', function (e) {
+                    this.accessToken = e.detail.result.access_token;
+                    this.$.uploadview.style.display = "block";
+                }.bind(this));
+                document.addEventListener('google-signed-out', function (e) {
+                    this.$.uploadview.style.display = "hidden";
+                }.bind(this));
+                document.addEventListener('google-signed-attempted', function (e) {
+                    this.$.uploadview.style.display = "hidden";
+                }.bind(this));
+                document.addEventListener('clear-upload-list', function () {
+                    this.clearUploadList();
+                }.bind(this));
+            },
+            selectFiles: function (files) {
+                this.queue = files;
+                this.$.status.innerHTML = 'Files selected';
+
+                for (var i = 0, f; f = files[i]; i++) {
+                    this.uploadList.push(f);
+                }
+
+                if (this.autoUpload) {
+                    this.uploadFiles(files);
+                }
+            },
+            manualUpload: function () {
+                this.uploadFiles(this.queue);
+            },
+            uploadFiles: function (files) {
+                var uploadedList = this.uploadedList;
+
+                for (var i = 0, f; f = files[i]; i++) {
+                    this.$.status.innerHTML = 'Uploading...';
+                    var uploader = new MediaUploader({
+                        file: f,
+                        token: this.accessToken,
+                        onComplete: function (data) {
+                            uploadedList.push(JSON.parse(data));
+                            this.$.status.innerHTML = 'Upload successful';
+                            this.uploadList = [];
+                        }.bind(this)
+                    });
+                    uploader.upload();
+                }
+            },
+            tapSelect: function (evt) {
+                this.$.files.click();
+            },
+            handleDragOver: function (evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+                evt.dataTransfer.dropEffect = 'copy';
+            },
+            handleFilePick: function (evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+                this.selectFiles(evt.target.files);
+            },
+            handleFileSelect: function (evt) {
+                evt.stopPropagation();
+                evt.preventDefault();
+                this.selectFiles(evt.dataTransfer.files);
+            },
+            clearUploadList: function () {
+                this.uploadedList = [];
+                this.uploadList = [];
+            }
+        });
+    </script>
+</polymer-element>

@@ -1,0 +1,13 @@
+{
+  "name": "x-live-edit",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master",
+    "polymer-collapse": "Polymer/polymer-collapse#master",
+    "polymer-media-query": "Polymer/polymer-media-query#master",
+    "polymer-ui-icon-button": "Polymer/polymer-ui-icon-button#master",
+    "polymer-ui-toolbar": "Polymer/polymer-ui-toolbar#master",
+    "polymer-ui-splitter": "Polymer/polymer-ui-splitter#master",
+    "x-output": "Polymer/x-output#master"
+  }
+}

@@ -1,0 +1,101 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="x-slideshow" attributes="width height auto timer">
+  <template>
+    <div class="container" style="width:{{width}}px; height:{{height}}px;">
+      <div on-click="{{onPreviousClicked}}" class="controls previous" style="line-height:{{height}}px;"><</div>
+      <content select="img"></content>
+      <div on-click="{{onNextClicked}}" class="controls next" style="line-height:{{height}}px;">></div>
+    </div>
+
+    <style>
+      :host .container {
+        border:1px solid black;
+        position:relative;
+      }
+      :host .controls{
+        width:40px;
+        height:100%;
+        color:white;
+        background-color:rgba(0, 0, 0, 0.5);
+        text-align:center;
+        font-size:1.5em;
+        line-height:40px;
+        position:absolute;
+        opacity:0;
+        cursor:pointer;
+        z-index:100;
+      }
+      :host .controls:hover{
+        opacity:1;
+      }
+      :host .previous{
+        left:0;
+        top:0;
+      }
+      :host .next{
+        right:0;
+        top:0;
+      }
+      ::content img {
+        position:absolute;
+        top:0;
+        opacity:0;
+        width:100%;
+        height:100%;
+        -webkit-transition: all 1s ease-in-out;
+        -moz-transition: all 1s ease-in-out;
+        -ms-transition: all 1s ease-in-out;
+        -o-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;
+      }
+    </style>
+  </template>
+  <script>
+    Polymer('x-slideshow', {
+      currentImage: 0, //image to start with initially
+      width:700,
+      height:700,
+      ready: function() {
+        this.images = this.querySelectorAll("img");
+        if (this.images.length > 0){
+          this.images[0].style.opacity = 1;
+        }
+
+        //start auto slideshow if element's auto attribute is true
+        var timer = (this.timer) ? this.timer : 5000;
+        if (this.auto === true){
+          setInterval((function(self) {         
+            return function() {   
+              self.onNextClicked(); 
+            }
+          })(this), timer);         
+        }
+
+      },
+      onNextClicked: function(evt){
+        this.images[this.currentImage].style.opacity = 0;
+        this.getNextImage().style.opacity = 1;
+      },
+
+      onPreviousClicked: function(evt){
+        this.images[this.currentImage].style.opacity = 0;
+        this.getPreviousImage().style.opacity = 1;
+      },
+
+      getNextImage: function(){
+        this.currentImage = (this.currentImage+1) % this.images.length;
+        return this.images[this.currentImage];
+      },
+
+      getPreviousImage: function(){
+        if(this.currentImage - 1 < 0)
+        {
+          this.currentImage = this.images.length;
+        }
+        this.currentImage = (this.currentImage-1) % this.images.length;
+        return this.images[this.currentImage];
+      },
+    });
+</script>
+</polymer-element>

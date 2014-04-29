@@ -1,0 +1,25 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<polymer-element name="google-map-search" attributes="query result map">
+  <script>
+    Polymer('google-map-search', {
+      observe: {
+        query: 'search',
+        map: 'search'
+      },
+      search: function() {
+        if (this.query && this.map) {
+          var places = new google.maps.places.PlacesService(this.map);
+          places.textSearch({query: this.query}, this.gotResults.bind(this));
+        }
+      },
+      gotResults: function(results, status) {
+        this.result = {
+          latitude: results[0].geometry.location.lat(),
+          longitude: results[0].geometry.location.lng(),
+          show: true
+        }
+      }
+    });
+  </script>
+</polymer-element>

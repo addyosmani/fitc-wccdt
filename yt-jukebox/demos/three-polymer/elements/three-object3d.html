@@ -1,0 +1,43 @@
+<polymer-element name="three-object3d" attributes="x y z" lightdom>
+    <script>      
+        Polymer("three-object3d", {
+            nodesAdded: function(nodes) {
+                 // give polymer a chance to run create on the node
+                var self = this;
+                if(!nodes) debugger;
+                setTimeout(function() {
+                    for(var i = 0; i < nodes.length; i++) {
+                        if(nodes[i].three && nodes[i].three instanceof THREE.Object3D) 
+                            self.three.add(nodes[i].three);
+                    }
+                }, 0);
+            },
+            nodesRemoved: function(nodes) {
+                for(var i = 0; i < nodes.length; i++) {
+                    if(nodes[i].three && nodes[i].three instanceof THREE.Object3D) 
+                        this.three.remove(nodes[i].three);
+                }
+            },
+            ready: function() {
+                if(!this.three) {
+                    this.three = new THREE.Object3D();
+                }
+                
+                //https://github.com/Polymer/polymer/blob/master/src/instance/properties.js#L25
+                ["x", "y", "z"].forEach(POLYTHREE.bindAttrib.bind(this, this, this.three.position));
+                
+                var self = this;
+                this.observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        mutation.addedNodes && (self.nodesAdded(mutation.addedNodes));
+                        mutation.removedNodes && (self.nodesRemoved(mutation.removedNodes));
+                    });
+                });
+                this.observer.observe(this, {childList: true});
+                
+                // this.shadowRoot.children ?
+                this.nodesAdded(this.children);
+            }
+        });
+    </script>
+</polymer-element>
